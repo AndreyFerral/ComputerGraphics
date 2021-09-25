@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,18 +50,38 @@ namespace lab2
             */
 
             SolidBrush myTrum = new SolidBrush(Color.DarkOrchid);
-           
+
 
             // первые кординаты - начала отчета, вторые - размер
             // g.FillRectangle(myTrum, 8, 8, 8, 8);
             // g.FillRectangle(myTrum, 24, 8, 8, 8);
 
-            for (int i = 8; i <= pictureBox1.Size.Height - 8; i = i + 16) {
-                for (int j = 8; j <= pictureBox1.Size.Width - 8; j = j + 16)
+           
+            for (int h = 16; h <= pictureBox1.Size.Height - 16; h = h + 32) {
+                for (int w = 16; w <= pictureBox1.Size.Width - 16; w = w + 32)
                 {
-                    g.FillRectangle(myTrum, j, i, 8, 8);
+                    //g.FillRectangle(myTrum, j, i, 8, 8);
+
+                    for (int i = 8; i <= 16; i = i + 2)
+                    {
+                        g.FillRectangle(myTrum, i, 8, 2, 2);
+                    }
+
+                    for (int j = 8; j <= 16; j = j + 2)
+                    {
+                        g.FillRectangle(myTrum, 12, j, 2, 2);
+                    }
+
+                    for (int i = 8; i <= 16; i = i + 2)
+                    {
+                        g.FillRectangle(myTrum, i, 16, 2, 2);
+                    }
                 }
             }
+           
+
+
+
 
             int x = 50;
             int correct = 250;
@@ -80,6 +101,12 @@ namespace lab2
             points[10] = new Point(10 * x - correct, 8 * x - correct);
 
             g.DrawLines(Pens.Black, points);
+
+            //Graphics g = e.Graphics;
+            SolidBrush peg = new SolidBrush(Color.BurlyWood);
+            GraphicsPath gp = new GraphicsPath(FillMode.Winding);
+            gp.AddPolygon(points);
+            g.FillPath(peg, gp);
 
         }
 
