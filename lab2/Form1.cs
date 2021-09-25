@@ -13,110 +13,122 @@ namespace lab2
 {
     public partial class Form1 : Form
     {
+        private const int x = 50;         // увеличение размера звезды
+        private const int correct = 250;  // коррекция местоположения звезды
+
         public Form1()
         {
             InitializeComponent();
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Объявляем объект "g" класса Graphics и предоставляем
-            // ему возможность рисования на pictureBox1:
-            Graphics g = pictureBox1.CreateGraphics();
-            g.Clear(Color.White);
+            // Без bitmap появляются мерцания при рисовке изображения
+            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Graphics graph = Graphics.FromImage(myBitmap);
+            graph.Clear(Color.White);
 
-            /*
+            Brush blackBrush = new SolidBrush(Color.Black);
+            Brush whiteBrush = new SolidBrush(Color.White);
+            Pen blackPen = new Pen(Color.Black, 3);
 
-            int n = 5;              // число вершин
-            double R = 100, r = 200;  // радиусы
-            double alpha = 55;      // поворот
-            double                  // центр
-                x0 = pictureBox1.Size.Width / 2, 
-                y0 = pictureBox1.Size.Height / 2; ; 
+            drawLetterI(graph, blackBrush);    // Рисуем буквы
+            drawStar(graph, blackPen);         // Рисуем звезду
+            fillBackground(graph, whiteBrush); // Заливаем фон звезды белым цветом
+            pictureBox1.Image = myBitmap;
 
-            PointF[] points = new PointF[2 * n + 1];
-            double a = alpha, da = Math.PI / n, l;
-            for (int k = 0; k < 2 * n + 1; k++)
-            {
-                l = k % 2 == 0 ? r : R;
-                points[k] = new PointF((float)(x0 + l * Math.Cos(a)), (float)(y0 + l * Math.Sin(a)));
-                a += da;
-            }
+        }
 
-            g.DrawLines(Pens.Black, points);
-
-            */
-
-
-
-
-
-
-            int x = 50;
-            int correct = 250;
-
-            Point[] points = new Point[11];
-
-            points[0] = new Point(10 * x - correct, 8 * x - correct);
-            points[1] = new Point(13 * x - correct, 6 * x - correct);
-            points[2] = new Point(12 * x - correct, 9 * x - correct);
-            points[3] = new Point(14 * x - correct, 11 * x - correct);
-            points[4] = new Point(11 * x - correct, 11 * x - correct);
-            points[5] = new Point(10 * x - correct, 14 * x - correct);
-            points[6] = new Point(9 * x - correct, 11 * x - correct);
-            points[7] = new Point(6 * x - correct, 11 * x - correct);
-            points[8] = new Point(8 * x - correct, 9 * x - correct);
-            points[9] = new Point(7 * x - correct, 6 * x - correct);
-            points[10] = new Point(10 * x - correct, 8 * x - correct);
-
-            Pen blackPen = new Pen(Color.Black, 2);
-            g.DrawLines(blackPen, points);
-
-            // Заливка многоугольника
-            /*
-            SolidBrush peg = new SolidBrush(Color.BurlyWood);
-            GraphicsPath gp = new GraphicsPath(FillMode.Winding);
-            gp.AddPolygon(points);
-            g.FillPath(peg, gp);
-            */
-
-
-            SolidBrush myTrum = new SolidBrush(Color.DarkRed);
-
-            // первые кординаты - начала отчета, вторые - размер
-            // g.FillRectangle(myTrum, 8, 8, 8, 8);
-            // g.FillRectangle(myTrum, 24, 8, 8, 8);
-
-            const int startPos = 8;             // стартовая позиция рисования букв
+        private void drawLetterI(Graphics graph, Brush blackBrush)
+        {
+            const int startPos = 8;             // стартовая позиция рисования букв (изменяем масштаб буквы)
             const int distance = startPos * 3;  // дистанция между буквами
             const int width = 2;                // ширина буквы
 
-
             for (int w = startPos; w <= pictureBox1.Size.Width + startPos; w = w + distance)
             {
-                for (int h = startPos; h <= pictureBox1.Size.Height + startPos; h = h + distance)
+                for (int h = startPos; h <= pictureBox1.Size.Width + startPos; h = h + distance)
                 {
                     for (int i = h; i <= h + startPos; i = i + 2)
                     {
-                        g.FillRectangle(myTrum, i, w, width, width);
-                        g.FillRectangle(myTrum, i, w + startPos, width, width);
-                        g.FillRectangle(myTrum, w + startPos/2, i, width, width);
+                        graph.FillRectangle(blackBrush, i, w, width, width);
+                        graph.FillRectangle(blackBrush, i, w + startPos, width, width);
+                        graph.FillRectangle(blackBrush, w + startPos / 2, i, width, width);
                     }
                 }
             }
+        }
 
- 
-            
+        private void drawStar(Graphics graph, Pen blackPen)
+        {
+            graph.DrawLines(blackPen, new PointF[]
+                {
+                new Point(10 * x - correct, 8 * x - correct),
+                new Point(13 * x - correct, 6 * x - correct),
+                new Point(12 * x - correct, 9 * x - correct),
+                new Point(14 * x - correct, 11 * x - correct),
+                new Point(11 * x - correct, 11 * x - correct),
+                new Point(10 * x - correct, 14 * x - correct),
+                new Point(9 * x - correct, 11 * x - correct),
+                new Point(6 * x - correct, 11 * x - correct),
+                new Point(6 * x - correct, 11 * x - correct),
+                new Point(8 * x - correct, 9 * x - correct),
+                new Point(7 * x - correct, 6 * x - correct),
+                new Point(10 * x - correct, 8 * x - correct),
+             });
+
+        }
+
+        private void fillBackground(Graphics graph, Brush whiteBrush)
+        {
+            // Нижний многоугольник (за фигурой)
+            graph.FillPolygon(whiteBrush, new PointF[]
+            {
+                new Point(11 * x - correct, 11 * x - correct),
+                new Point(10 * x - correct, 14 * x - correct),
+                new Point(9 * x - correct, 11 * x - correct),
+                new Point(0, 11 * x - correct),
+                new Point(0, pictureBox1.Size.Height),
+                new Point(pictureBox1.Size.Width, pictureBox1.Size.Height),
+                new Point(pictureBox1.Size.Width, 11 * x - correct),
+                new Point(11 * x - correct, 11 * x - correct),
+            });
+
+            // Левый многоугольник (за фигурой)
+            graph.FillPolygon(whiteBrush, new PointF[]
+            {
+                new Point(6 * x - correct, 11 * x - correct),
+                new Point(6 * x - correct, 11 * x - correct),
+                new Point(8 * x - correct, 9 * x - correct),
+                new Point(7 * x - correct, 6 * x - correct),
+                new Point(0, 0),
+                new Point(0, 11 * x - correct),
+                new Point(6 * x - correct, 11 * x - correct),
+            });
 
 
+            // Верхний многоугольник (за фигурой)
+            graph.FillPolygon(whiteBrush, new PointF[]
+            {
+                new Point(7 * x - correct, 6 * x - correct),
+                new Point(10 * x - correct, 8 * x - correct),
+                new Point(13 * x - correct, 6 * x - correct),
+                new Point(pictureBox1.Size.Width, 0),
+                new Point(0, 0),
+                new Point(7 * x - correct, 6 * x - correct),
+            });
 
 
-
-
-
-
+            // Правый многоугольник (за фигурой)
+            graph.FillPolygon(whiteBrush, new PointF[]
+            {
+                new Point(13 * x - correct, 6 * x - correct),
+                new Point(12 * x - correct, 9 * x - correct),
+                new Point(14 * x - correct, 11 * x - correct),
+                new Point(pictureBox1.Size.Width, 11 * x - correct),
+                new Point(pictureBox1.Size.Width, 0),
+                new Point(13 * x - correct, 6 * x - correct),
+            });
 
         }
 
