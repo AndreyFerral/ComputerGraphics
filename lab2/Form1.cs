@@ -49,36 +49,7 @@ namespace lab2
 
             */
 
-            SolidBrush myTrum = new SolidBrush(Color.DarkOrchid);
 
-
-            // первые кординаты - начала отчета, вторые - размер
-            // g.FillRectangle(myTrum, 8, 8, 8, 8);
-            // g.FillRectangle(myTrum, 24, 8, 8, 8);
-
-           
-            for (int h = 16; h <= pictureBox1.Size.Height - 16; h = h + 32) {
-                for (int w = 16; w <= pictureBox1.Size.Width - 16; w = w + 32)
-                {
-                    //g.FillRectangle(myTrum, j, i, 8, 8);
-
-                    for (int i = 8; i <= 16; i = i + 2)
-                    {
-                        g.FillRectangle(myTrum, i, 8, 2, 2);
-                    }
-
-                    for (int j = 8; j <= 16; j = j + 2)
-                    {
-                        g.FillRectangle(myTrum, 12, j, 2, 2);
-                    }
-
-                    for (int i = 8; i <= 16; i = i + 2)
-                    {
-                        g.FillRectangle(myTrum, i, 16, 2, 2);
-                    }
-                }
-            }
-           
 
 
 
@@ -100,13 +71,52 @@ namespace lab2
             points[9] = new Point(7 * x - correct, 6 * x - correct);
             points[10] = new Point(10 * x - correct, 8 * x - correct);
 
-            g.DrawLines(Pens.Black, points);
+            Pen blackPen = new Pen(Color.Black, 2);
+            g.DrawLines(blackPen, points);
 
-            //Graphics g = e.Graphics;
+            // Заливка многоугольника
+            /*
             SolidBrush peg = new SolidBrush(Color.BurlyWood);
             GraphicsPath gp = new GraphicsPath(FillMode.Winding);
             gp.AddPolygon(points);
             g.FillPath(peg, gp);
+            */
+
+
+            SolidBrush myTrum = new SolidBrush(Color.DarkRed);
+
+            // первые кординаты - начала отчета, вторые - размер
+            // g.FillRectangle(myTrum, 8, 8, 8, 8);
+            // g.FillRectangle(myTrum, 24, 8, 8, 8);
+
+            const int startPos = 8;             // стартовая позиция рисования букв
+            const int distance = startPos * 3;  // дистанция между буквами
+            const int width = 2;                // ширина буквы
+
+
+            for (int w = startPos; w <= pictureBox1.Size.Width + startPos; w = w + distance)
+            {
+                for (int h = startPos; h <= pictureBox1.Size.Height + startPos; h = h + distance)
+                {
+                    for (int i = h; i <= h + startPos; i = i + 2)
+                    {
+                        g.FillRectangle(myTrum, i, w, width, width);
+                        g.FillRectangle(myTrum, i, w + startPos, width, width);
+                        g.FillRectangle(myTrum, w + startPos/2, i, width, width);
+                    }
+                }
+            }
+
+ 
+            
+
+
+
+
+
+
+
+
 
         }
 
