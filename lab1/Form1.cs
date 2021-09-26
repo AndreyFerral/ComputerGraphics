@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace lab1
@@ -110,7 +105,122 @@ namespace lab1
 
         private void button6_Click(object sender, EventArgs e)
         {
+            // Без bitmap появляются мерцания при рисовке изображения
+            Bitmap myBitmap = new Bitmap(pictureBox2.Width, pictureBox1.Height); // буфер для Bitmap-изображения
+            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
+            graph.Clear(Color.White);
 
+            Color redColor = Color.FromArgb(250 / 100 * 25, 255, 0, 0);
+            Color greenColor = Color.FromArgb(250 / 100 * 25, 0, 250, 0);
+            Color blueColor = Color.FromArgb(250 / 100 * 25, 0, 0, 250);
+
+            HatchBrush redHatchBrush = new HatchBrush(HatchStyle.DiagonalBrick, Color.Black, greenColor);
+            HatchBrush greenHatchBrush = new HatchBrush(HatchStyle.Divot, Color.Black, redColor);
+            HatchBrush blueHatchBrush = new HatchBrush(HatchStyle.OutlinedDiamond, Color.Black, blueColor);
+
+            SolidBrush redBrush = new SolidBrush(redColor);
+            SolidBrush greenBrush = new SolidBrush(greenColor);
+            SolidBrush blueBrush = new SolidBrush(blueColor);
+
+            drawCube(graph, redHatchBrush, greenHatchBrush, blueHatchBrush, redBrush, greenBrush, blueBrush);
+
+            pictureBox2.Image = myBitmap;
+        }
+
+        private void drawCube(Graphics graph, Brush brush1, Brush brush2, Brush brush3, Brush brush4, Brush brush5, Brush brush6)
+        {
+            const int sizeCube = 150;
+
+            // Нижняя грань
+            graph.FillPolygon(brush1, new PointF[]
+            {
+                /*
+                new Point(9, 18),
+                new Point(18, 18),
+                new Point(21, 15),
+                new Point(12, 15),
+                */
+                new Point(sizeCube, sizeCube*2),
+                new Point(sizeCube*2, sizeCube*2),
+                new Point(sizeCube*2+sizeCube/3, sizeCube*2-sizeCube/3),
+                new Point(sizeCube+sizeCube/3, sizeCube*2-sizeCube/3),
+            });
+
+            // Правая грань
+            graph.FillPolygon(brush2, new PointF[]
+            {
+                /*
+                new Point(12, 15),
+                new Point(9, 18),
+                new Point(9, 9),
+                new Point(12, 6),
+                */
+                new Point(sizeCube+sizeCube/3, sizeCube*2-sizeCube/3),
+                new Point(sizeCube, sizeCube*2),
+                new Point(sizeCube, sizeCube),
+                new Point(sizeCube+sizeCube/3, sizeCube-sizeCube/3),
+            });
+
+            // Задняя грань
+            graph.FillPolygon(brush3, new PointF[]
+            {
+                /*
+                new Point(12, 6),
+                new Point(21, 6),
+                new Point(21, 15),
+                new Point(12, 15),
+                */
+                new Point(sizeCube+sizeCube/3, sizeCube-sizeCube/3),
+                new Point(sizeCube*2+sizeCube/3, sizeCube-sizeCube/3),
+                new Point(sizeCube*2+sizeCube/3, sizeCube*2-sizeCube/3),
+                new Point(sizeCube+sizeCube/3, sizeCube*2-sizeCube/3),
+            });
+
+            // Передняя грань
+            graph.FillPolygon(brush4, new PointF[]
+            {
+                /*
+                new Point(9, 9),
+                new Point(9, 18),
+                new Point(18, 18),
+                new Point(18, 9),
+                */
+                new Point(sizeCube, sizeCube),
+                new Point(sizeCube, sizeCube*2),
+                new Point(sizeCube*2, sizeCube*2),
+                new Point(sizeCube*2, sizeCube),
+             });
+
+            // Правая грань
+            graph.FillPolygon(brush5, new PointF[]
+            {
+                /*
+                new Point(18, 18),
+                new Point(18, 9),
+                new Point(21, 6),
+                new Point(21, 15),
+                */
+                new Point(sizeCube*2, sizeCube*2),
+                new Point(sizeCube*2, sizeCube),
+                new Point(sizeCube*2+sizeCube/3, sizeCube-sizeCube/3),
+                new Point(sizeCube*2+sizeCube/3, sizeCube*2-sizeCube/3),
+            });
+
+
+            // Верхняя грань
+            graph.FillPolygon(brush6, new PointF[]
+            {
+                /*
+                new Point(18, 9),
+                new Point(21, 6),
+                new Point(12, 6),
+                new Point(9, 9),
+                */
+                new Point(sizeCube*2, sizeCube),
+                new Point(sizeCube*2+sizeCube/3, sizeCube-sizeCube/3),
+                new Point(sizeCube+sizeCube/3, sizeCube-sizeCube/3),
+                new Point(sizeCube, sizeCube),
+            });
         }
 
         private void button7_Click(object sender, EventArgs e)
