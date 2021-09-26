@@ -24,24 +24,80 @@ namespace lab2
         private void button1_Click(object sender, EventArgs e)
         {
             // Без bitmap появляются мерцания при рисовке изображения
-            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Graphics graph = Graphics.FromImage(myBitmap);
+            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
+            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
             graph.Clear(Color.White);
 
             Brush blackBrush = new SolidBrush(Color.Black);
             Brush whiteBrush = new SolidBrush(Color.White);
-            Pen blackPen = new Pen(Color.Black, 3);
+            Pen blackPen = new Pen(Color.Black, 2);
 
-            drawLetterI(graph, blackBrush);    // Рисуем буквы
-            drawStar(graph, blackPen);         // Рисуем звезду
-            fillBackground(graph, whiteBrush); // Заливаем фон звезды белым цветом
+            drawLetterI(graph, blackBrush);    // рисуем буквы
+            drawStar(graph, blackPen);         // рисуем звезду
+            fillBackground(graph, whiteBrush); // заливаем фон звезды белым цветом
+
             pictureBox1.Image = myBitmap;
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Без bitmap появляются мерцания при рисовке изображения
+            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
+            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
+            graph.Clear(Color.White);
+
+            Brush blackBrush = new SolidBrush(Color.Black);
+            Brush whiteBrush = new SolidBrush(Color.White);
+            Pen blackPen = new Pen(Color.Black, 2);
+
+            drawLetterS(graph, blackPen);      // рисуем буквы
+            drawStar(graph, blackPen);         // рисуем звезду
+            fillBackground(graph, whiteBrush); // заливаем фон звезды белым цветом
+
+            pictureBox1.Image = myBitmap;
+        }
+
+        private void drawLetterS(Graphics graph, Pen blackPen)
+        {
+            const int startPos = 8;               // стартовая позиция рисования букв
+            const int sizeLetter = 8;             // размер буквы
+            const int distanceX = sizeLetter * 3; // дистанция между буквами по координате X
+            const int distanceY = sizeLetter * 3; // дистанция между буквами по координате Y
+
+            const int weightArc = sizeLetter;                        // высота полукруга
+            const int heightArc = (sizeLetter + sizeLetter * 2) / 2; // ширина полукруга
+
+            const int coordXArc = startPos;
+            const int coordYfirstArc = sizeLetter;
+            const int coordYsecondArc = sizeLetter * 2 - sizeLetter / 4;
+
+            const int beginSecondArc = heightArc / 2;
+
+            for (int y = 0; y <= pictureBox1.Height; y += distanceY)
+            {
+                for (int x = coordXArc; x <= pictureBox1.Width; x += distanceX)
+                {
+                    graph.DrawArc(blackPen, x, coordYfirstArc + y, heightArc, weightArc, 90, 180);
+                    graph.DrawArc(blackPen, x - beginSecondArc, coordYsecondArc + y, heightArc, weightArc, -90, 180);
+                }
+            }
+
+            /*
+            for (int y = 0; y <= pictureBox1.Height; y += distance * 2)
+            {
+                for (int x = startPos; x <= pictureBox1.Width; x += distance)
+                {
+                    graph.DrawArc(bP, 0 + x, 16 + y, 24, 16, 90, 180);
+                    graph.DrawArc(bP, -12 + x, 28 + y, 24, 16, -90, 180);
+
+                }
+            }
+            */
         }
 
         private void drawLetterI(Graphics graph, Brush blackBrush)
         {
-            const int startPos = 8;             // стартовая позиция рисования букв (изменяем масштаб буквы)
+            const int startPos = 8;             // стартовая позиция рисования букв (изменение масштаба буквы)
             const int distance = startPos * 3;  // дистанция между буквами
             const int width = 2;                // ширина буквы
 
@@ -76,7 +132,6 @@ namespace lab2
                 new Point(7 * x - correct, 6 * x - correct),
                 new Point(10 * x - correct, 8 * x - correct),
              });
-
         }
 
         private void fillBackground(Graphics graph, Brush whiteBrush)
@@ -106,7 +161,6 @@ namespace lab2
                 new Point(6 * x - correct, 11 * x - correct),
             });
 
-
             // Верхний многоугольник (за фигурой)
             graph.FillPolygon(whiteBrush, new PointF[]
             {
@@ -118,7 +172,6 @@ namespace lab2
                 new Point(7 * x - correct, 6 * x - correct),
             });
 
-
             // Правый многоугольник (за фигурой)
             graph.FillPolygon(whiteBrush, new PointF[]
             {
@@ -129,10 +182,9 @@ namespace lab2
                 new Point(pictureBox1.Size.Width, 0),
                 new Point(13 * x - correct, 6 * x - correct),
             });
-
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
             // Объявляем объект "g" класса Graphics и предоставляем
             // ему возможность рисования на pictureBox1:

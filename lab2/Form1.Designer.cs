@@ -67,6 +67,7 @@ namespace lab2
             this.button3.TabIndex = 5;
             this.button3.Text = "Вариант 23";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // pictureBox1
             // 
@@ -86,7 +87,8 @@ namespace lab2
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.DoubleBuffered = true;
+            this.MaximumSize = new System.Drawing.Size(500, 600);
+            this.MinimumSize = new System.Drawing.Size(500, 600);
             this.Name = "Form1";
             this.Text = "Замкнутый многоугольник";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
