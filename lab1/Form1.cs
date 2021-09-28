@@ -158,9 +158,10 @@ namespace lab1
             int centerDisplayX = pictureBox1.Size.Width / 2;
             int centerDisplayY = pictureBox1.Size.Height / 2;
 
-            // длина ромба по X, Y. (75, 100; 150, 200 и тд)
-            const int rhombX = 75;
-            const int rhombY = 100;
+            const int sizeRhomb = 25;
+
+            const int rhombX = 3 * sizeRhomb;
+            const int rhombY = 4 * sizeRhomb;
 
             // Главный ромб
             PointF[] father = new PointF[]
@@ -178,70 +179,70 @@ namespace lab1
 
         private void drawFourRhombs(Graphics graph, Brush brush, PointF[] father, int it)
         {
-            const int limitIteration = 3;  // количество рекурсий (7 и более долго)
-            const int distanceRhombs = 30; // дистанция между ромбами (от 0)
+            const int limitIteration = 3;  // количество рекурсивных вызовов (7 и более долго)
+            const int distanceRhombs = 30; // дистанция между ромбами
 
             // верхняя точка
-            float upX = father[0].X;
-            float upY = father[0].Y;
+            float topX = father[0].X;
+            float topY = father[0].Y;
 
             // верхняя правая точка
-            float upRightX = (father[0].X + father[1].X) / 2;
-            float upRightY = (father[0].Y + father[1].Y) / 2;
+            float topRightX = (father[0].X + father[1].X) / 2;
+            float topRightY = (father[0].Y + father[1].Y) / 2;
 
             // середина
             float middleX = (father[0].X + father[2].X) / 2;
             float middleY = (father[0].Y + father[2].Y) / 2;
 
             // верхняя левая точка
-            float upLeftX = (father[0].X + father[3].X) / 2;
-            float upLeftY = (father[0].Y + father[3].Y) / 2;
+            float topLeftX = (father[0].X + father[3].X) / 2;
+            float topLeftY = (father[0].Y + father[3].Y) / 2;
 
             // верхний ромб
-            PointF[] upRhomb = new PointF[]
+            PointF[] topRhomb = new PointF[]
             {
-                new PointF(upX, upY - distanceRhombs),           // высшая точка
-                new PointF(upRightX, upRightY - distanceRhombs), // правая точка
-                new PointF(middleX, middleY - distanceRhombs),  // низкая точка
-                new PointF(upLeftX, upLeftY - distanceRhombs),  // левая точка
+                new PointF(topX, topY - distanceRhombs),           // высшая точка
+                new PointF(topRightX, topRightY - distanceRhombs), // правая точка
+                new PointF(middleX, middleY - distanceRhombs),     // низкая точка
+                new PointF(topLeftX, topLeftY - distanceRhombs),   // левая точка
             };
-            graph.FillPolygon(brush, upRhomb);
+            graph.FillPolygon(brush, topRhomb);
 
             // середина право
             float middleRightX = father[1].X;
             float middleRightY = father[1].Y;
 
             // низ право
-            float downRightX = (father[1].X + father[2].X) / 2;
-            float downRightY = (father[1].Y + father[2].Y) / 2;
+            float bottomRightX = (father[1].X + father[2].X) / 2;
+            float bottomRightY = (father[1].Y + father[2].Y) / 2;
 
             // правый ромб
             PointF[] rightRhomb = new PointF[]
             {
-                new PointF(upRightX + distanceRhombs, upRightY),         // высшая точка
+                new PointF(topRightX + distanceRhombs, topRightY),       // высшая точка
                 new PointF(middleRightX + distanceRhombs, middleRightY), // правая точка
-                new PointF(downRightX + distanceRhombs, downRightY),     // низкая точка
+                new PointF(bottomRightX + distanceRhombs, bottomRightY), // низкая точка
                 new PointF(middleX + distanceRhombs, middleY),           // левая точка
             };
             graph.FillPolygon(brush, rightRhomb);
 
             // низ
-            float downX = father[2].X;
-            float downY = father[2].Y;
+            float bottomX = father[2].X;
+            float bottomY = father[2].Y;
 
             // низ лево
-            float downLeftX = (father[2].X + father[3].X) / 2;
-            float downLeftY = (father[2].Y + father[3].Y) / 2;
+            float bottomLeftX = (father[2].X + father[3].X) / 2;
+            float bottomLeftY = (father[2].Y + father[3].Y) / 2;
 
             // нижний ромб
-            PointF[] downRhomb = new PointF[]
+            PointF[] bottomRhomb = new PointF[]
             {
-                new PointF(middleX, middleY  + distanceRhombs),      // высшая точка
-                new PointF(downRightX, downRightY + distanceRhombs), // правая точка
-                new PointF(downX, downY + distanceRhombs),           // низкая точка
-                new PointF(downLeftX, downLeftY + distanceRhombs),   // левая точка
+                new PointF(middleX, middleY  + distanceRhombs),          // высшая точка
+                new PointF(bottomRightX, bottomRightY + distanceRhombs), // правая точка
+                new PointF(bottomX, bottomY + distanceRhombs),           // низкая точка
+                new PointF(bottomLeftX, bottomLeftY + distanceRhombs),   // левая точка
             };
-            graph.FillPolygon(brush, downRhomb);
+            graph.FillPolygon(brush, bottomRhomb);
 
             // середина дево
             float middleLeftX = father[3].X;
@@ -250,18 +251,18 @@ namespace lab1
             // левый ромб
             PointF[] leftRhomb = new PointF[]
             {
-                new PointF(upLeftX - distanceRhombs, upLeftY),         // высшая точка
+                new PointF(topLeftX - distanceRhombs, topLeftY),       // высшая точка
                 new PointF(middleX - distanceRhombs, middleY),         // правая точка
-                new PointF(downLeftX - distanceRhombs, downLeftY),     // низкая точка
+                new PointF(bottomLeftX - distanceRhombs, bottomLeftY), // низкая точка
                 new PointF(middleLeftX - distanceRhombs, middleLeftY), // левая точка
             };
             graph.FillPolygon(brush, leftRhomb);
 
             if (it < limitIteration)
             {
-                drawFourRhombs(graph, brush, upRhomb, it + 1);
+                drawFourRhombs(graph, brush, topRhomb, it + 1);
                 drawFourRhombs(graph, brush, rightRhomb, it + 1);
-                drawFourRhombs(graph, brush, downRhomb, it + 1);
+                drawFourRhombs(graph, brush, bottomRhomb, it + 1);
                 drawFourRhombs(graph, brush, leftRhomb, it + 1);
             }
         }
@@ -315,7 +316,6 @@ namespace lab1
                 new Point(sizeCube*2+sizeCube/3, sizeCube*2-sizeCube/3),
             });
 
-
             // Верхняя грань
             graph.FillPolygon(brush6, new PointF[]
             {
@@ -326,7 +326,7 @@ namespace lab1
             });
         }
 
-        private void drawLetterW(Graphics graph, Pen blackPen)
+        private void drawLetterW(Graphics graph, Pen pen)
         {
             const int sizeLetter = 8;             // размер буквы
             const int distanceX = sizeLetter * 3; // дистанция между буквами по координате X
@@ -349,7 +349,7 @@ namespace lab1
             {
                 for (int x = startPosX; x <= pictureBox1.Width; x += distanceX)
                 {
-                    graph.DrawLines(blackPen, new PointF[]
+                    graph.DrawLines(pen, new PointF[]
                     {
                         new Point(firstCoordX + x, bottomCoordY + y),
                         new Point(secondCoordX + x, topCoordY + y),
@@ -361,7 +361,7 @@ namespace lab1
             }
         }
 
-        private void drawLetterS(Graphics graph, Pen blackPen)
+        private void drawLetterS(Graphics graph, Pen pen)
         {
             const int sizeLetter = 8;             // размер буквы
             const int distanceX = sizeLetter * 3; // дистанция между буквами по координате X
@@ -380,13 +380,13 @@ namespace lab1
             {
                 for (int x = startPosX; x <= pictureBox1.Width; x += distanceX)
                 {
-                    graph.DrawArc(blackPen, x, coordYfirstArc + y, heightArc, weightArc, 90, 180);
-                    graph.DrawArc(blackPen, x - beginSecondArc, coordYsecondArc + y, heightArc, weightArc, -90, 180);
+                    graph.DrawArc(pen, x, coordYfirstArc + y, heightArc, weightArc, 90, 180);
+                    graph.DrawArc(pen, x - beginSecondArc, coordYsecondArc + y, heightArc, weightArc, -90, 180);
                 }
             }
         }
 
-        private void drawLetterI(Graphics graph, Brush blackBrush)
+        private void drawLetterI(Graphics graph, Brush brush)
         {
             const int startPos = 8;             // стартовая позиция рисования букв (изменение масштаба буквы)
             const int distance = startPos * 3;  // дистанция между буквами
@@ -398,9 +398,9 @@ namespace lab1
                 {
                     for (int i = h; i <= h + startPos; i = i + 2)
                     {
-                        graph.FillRectangle(blackBrush, i, w, width, width);
-                        graph.FillRectangle(blackBrush, i, w + startPos, width, width);
-                        graph.FillRectangle(blackBrush, w + startPos / 2, i, width, width);
+                        graph.FillRectangle(brush, i, w, width, width);
+                        graph.FillRectangle(brush, i, w + startPos, width, width);
+                        graph.FillRectangle(brush, w + startPos / 2, i, width, width);
                     }
                 }
             }
@@ -425,10 +425,10 @@ namespace lab1
              });
         }
 
-        private void fillBackground(Graphics graph, Brush whiteBrush)
+        private void fillBackground(Graphics graph, Brush brush)
         {
             // Нижний многоугольник (вне фигуры)
-            graph.FillPolygon(whiteBrush, new PointF[]
+            graph.FillPolygon(brush, new PointF[]
             {
                 new Point(11 * sizeStar - correctSize, 11 * sizeStar - correctSize),
                 new Point(10 * sizeStar - correctSize, 14 * sizeStar - correctSize),
@@ -441,7 +441,7 @@ namespace lab1
             });
 
             // Левый многоугольник (вне фигуры)
-            graph.FillPolygon(whiteBrush, new PointF[]
+            graph.FillPolygon(brush, new PointF[]
             {
                 new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
                 new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
@@ -453,7 +453,7 @@ namespace lab1
             });
 
             // Верхний многоугольник (вне фигуры)
-            graph.FillPolygon(whiteBrush, new PointF[]
+            graph.FillPolygon(brush, new PointF[]
             {
                 new Point(7 * sizeStar - correctSize, 6 * sizeStar - correctSize),
                 new Point(10 * sizeStar - correctSize, 8 * sizeStar - correctSize),
@@ -464,7 +464,7 @@ namespace lab1
             });
 
             // Правый многоугольник (вне фигуры)
-            graph.FillPolygon(whiteBrush, new PointF[]
+            graph.FillPolygon(brush, new PointF[]
             {
                 new Point(13 * sizeStar - correctSize, 6 * sizeStar - correctSize),
                 new Point(12 * sizeStar - correctSize, 9 * sizeStar - correctSize),
