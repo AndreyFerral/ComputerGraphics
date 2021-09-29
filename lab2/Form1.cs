@@ -7,9 +7,45 @@ namespace lab2
 {
     public partial class Form1 : Form
     {
+        private int currentLetter = 0;
+        private int countVertex = 5;
+
         public Form1()
         {
             InitializeComponent();
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+
+            // Настраиваем trackBar
+            trackBar1.Minimum = 2;
+            trackBar1.Maximum = 10;
+            trackBar1.Value = countVertex;
+            trackBar1.TickFrequency = 2;
+            trackBar1.SmallChange = 2;
+            trackBar1.LargeChange = 2;
+
+            // Без bitmap появляются мерцания при рисовке изображения
+            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
+            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
+            graph.Clear(Color.White);
+
+            // Рисуем звезду
+            drawStar(graph);
+
+            pictureBox1.Image = myBitmap;
+        }
+
+        private void trackBar1_Scroll(object sender, System.EventArgs e)
+        {
+            // Без bitmap появляются мерцания при рисовке изображения
+            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
+            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
+            graph.Clear(Color.White);
+
+            // Рисуем звезду
+            countVertex = trackBar1.Value;
+            drawStar(graph);
+
+            pictureBox1.Image = myBitmap;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -20,7 +56,8 @@ namespace lab2
             graph.Clear(Color.White);
 
             // Рисуем звезду и букву I
-            drawStar(graph, 1);
+            currentLetter = 1;
+            drawStar(graph);
 
             pictureBox1.Image = myBitmap;
         }
@@ -33,7 +70,8 @@ namespace lab2
             graph.Clear(Color.White);
 
             // Рисуем звезду и букву S
-            drawStar(graph, 2);
+            currentLetter = 2;
+            drawStar(graph);
 
             pictureBox1.Image = myBitmap;
         }
@@ -47,17 +85,18 @@ namespace lab2
             graph.Clear(Color.White);
 
             // Рисуем звезду и букву W
-            drawStar(graph, 3);
+            currentLetter = 3;
+            drawStar(graph);
 
             pictureBox1.Image = myBitmap;
         }
 
-        private void drawStar(Graphics graph, int letter) {
+        private void drawStar(Graphics graph) {
 
-            int countVertex = 4;  // число вершин
-            int R = 100, r = 200; // радиусы
-            int alpha = 50;       // поворот
-            int                   // центр
+            //int countVertex = countV; // число вершин
+            int R = 100, r = 200;      // радиусы
+            int alpha = 50;            // поворот
+            int                        // центр
                 centerDisplayX = pictureBox1.Width/2, 
                 centerDisplayY = pictureBox1.Height/2;
 
@@ -81,7 +120,7 @@ namespace lab2
             graph.DrawPolygon(blackPen, points);
 
             // Рисуем букву
-            switch (letter)
+            switch (currentLetter)
             {
                 case 1:
                     drawLetterI(graph, points);
@@ -92,6 +131,7 @@ namespace lab2
                 case 3:
                     drawLetterW(graph, points);
                     break;
+                default: break;
             }
         }
 
@@ -118,7 +158,7 @@ namespace lab2
         {
             const int startPosX = 0;       // стартовая позиция рисования букв по X
             const int startPosY = 0;       // стартовая позиция рисования букв по Y
-            const int size = 4;            // размер букв
+            const int size = 3;            // размер букв
             const int distance = size * 8; // дистанция между буквами
             const int width = 2;           // ширина буквы
 
@@ -159,17 +199,17 @@ namespace lab2
 
         private void drawLetterS(Graphics graph, PointF[] points)
         {
-            Brush blackBrush = new SolidBrush(Color.Black);
-
-            const int startPosX = 4;          // стартовая позиция рисования букв по X
-            const int startPosY = 0;          // стартовая позиция рисования букв по Y
+            const int startPosX = 4;         // стартовая позиция рисования букв по X
+            const int startPosY = 0;         // стартовая позиция рисования букв по Y
             const int radius = 4;            // радиус круга (увеличение размера буквы)
             const int distance = radius * 6; // дистанция между буквами
             const int width = 2;             // ширина буквы
             const int amountPoints = 100;    // количество точек (точность рисования)
 
             const int offsetBottomCircleX = radius;                  // смещение нижнего полукруга по оси Х
-            const int offsetBottomCircleY = radius * 2 - radius / 3; // смещеное нижнего полукруга по оси Y
+            const int offsetBottomCircleY = radius * 2 - radius / 2; // смещеное нижнего полукруга по оси Y
+
+            Brush blackBrush = new SolidBrush(Color.Black);
 
             for (int w = startPosX; w <= pictureBox1.Size.Width + startPosX; w = w + distance)
             {
@@ -184,13 +224,13 @@ namespace lab2
                         // Рисуем верхнюю часть буквы S (Если amountPoints 100, то от 25 до 75)
                         if (i >= amountPoints / 4 && i <= amountPoints - amountPoints / 4)
                         {
-                            if (checkPoint(points, (int)dx + w, (int)dy + h))
+                            if (checkPoint(points, (int)dx + w, (int)dy + h)) // Проверка на нахожедние в многоугольнике
                                 graph.FillRectangle(blackBrush, dx + w, dy + h, width, width);
                         }
                         // Рисуем нижнюю часть буквы S (Если amountPoints 100, то от 0 до 25 и от 75 до 100)
                         else
                         {
-                            if (checkPoint(points, dx + w - offsetBottomCircleX, dy + h + offsetBottomCircleY))
+                            if (checkPoint(points, dx + w - offsetBottomCircleX, dy + h + offsetBottomCircleY)) // Проверка на нахожедние в многоугольнике
                                 graph.FillRectangle(blackBrush, dx + w - offsetBottomCircleX, dy + h + offsetBottomCircleY, width, width);
                         }
                     }
@@ -215,13 +255,13 @@ namespace lab2
                 {
                     for (int i = h; i <= h + size; i++)
                     {
-                        if (checkPoint(points, i, w)) {
+                        if (checkPoint(points, i, w)) { // Проверка на нахожедние в многоугольнике
                             graph.FillRectangle(blackBrush, i, w, width, width);
                         }
-                        if (checkPoint(points, i, w + size)) {
+                        if (checkPoint(points, i, w + size)) { // Проверка на нахожедние в многоугольнике
                             graph.FillRectangle(blackBrush, i, w + size, width, width);
                         }
-                        if (checkPoint(points, w + size / 2, i)) {
+                        if (checkPoint(points, w + size / 2, i)) { // Проверка на нахожедние в многоугольнике
                             graph.FillRectangle(blackBrush, w + size / 2, i, width, width);
                         }
                     }
