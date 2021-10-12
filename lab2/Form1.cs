@@ -1,223 +1,154 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace lab2
 {
     public partial class Form1 : Form
     {
-        // второе задание
-        private const int sizeStar = 50;  // увеличение размера звезды (по десятке добавлять)
-        private const int correctSize = sizeStar / 10 * sizeStar;  // авто коррекция местоположения звезды
+        // Значение переменной А в 1 задании
+        private int currentAv9 = 9;
+
+        // Значение переменной А в 2 задании
+        private int currentAv19 = -12;
+
+        // Значение переменных А и B в 3 задании
+        private int currentAv29 = 9;
+        private int currentBv29 = 9;
 
         public Form1()
         {
             InitializeComponent();
+
+            // Настраиваем trackBar первого задания
+            trackBarAv9.Minimum = 1;
+            trackBarAv9.Maximum = 20;
+            trackBarAv9.Value = currentAv9;
+            trackBarAv9.TickFrequency = 4;
+            trackBarAv9.SmallChange = 4;
+            trackBarAv9.LargeChange = 4;
+
+            executeV9_Click(null, null);
+
+            // Настраиваем trackBar второго задания
+            trackBarAv19.Minimum = -20;
+            trackBarAv19.Maximum = -1;
+            trackBarAv19.Value = currentAv19;
+            trackBarAv19.TickFrequency = 4;
+            trackBarAv19.SmallChange = 4;
+            trackBarAv19.LargeChange = 4;
+
+            executeV19_Click(null, null);
+
+            // Настраиваем trackBar третьего задания
+            trackBarAv29.Minimum = 1;
+            trackBarAv29.Maximum = 20;
+            trackBarAv29.Value = currentAv29;
+            trackBarAv29.TickFrequency = 4;
+            trackBarAv29.SmallChange = 4;
+            trackBarAv29.LargeChange = 4;
+
+            trackBarBv29.Minimum = 1;
+            trackBarBv29.Maximum = 20;
+            trackBarBv29.Value = currentBv29;
+            trackBarBv29.TickFrequency = 4;
+            trackBarBv29.SmallChange = 4;
+            trackBarBv29.LargeChange = 4;
+
+            executeV29_Click(null, null);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // Обработка движения на trackBar первого задания
+        private void trackBarAv9_Scroll(object sender, System.EventArgs e)
         {
-            // Без bitmap появляются мерцания при рисовке изображения
-            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
-            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
-            graph.Clear(Color.White);
-
-            Brush blackBrush = new SolidBrush(Color.Black);
-            Brush whiteBrush = new SolidBrush(Color.White);
-            Pen blackPen = new Pen(Color.Black, 2);
-
-            drawLetterI(graph, blackBrush);    // рисуем буквы
-            drawStar(graph, blackPen);         // рисуем звезду
-            fillBackground(graph, whiteBrush); // заливаем фон звезды белым цветом
-
-            pictureBox1.Image = myBitmap;
+            currentAv9 = trackBarAv9.Value;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        // Обработка движения на trackBar второго задания
+        private void trackBarAv19_Scroll(object sender, System.EventArgs e)
         {
-            // Без bitmap появляются мерцания при рисовке изображения
-            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
-            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
-            graph.Clear(Color.White);
-
-            Brush blackBrush = new SolidBrush(Color.Black);
-            Brush whiteBrush = new SolidBrush(Color.White);
-            Pen blackPen = new Pen(Color.Black, 2);
-
-            drawLetterS(graph, blackPen);      // рисуем буквы
-            drawStar(graph, blackPen);         // рисуем звезду
-            fillBackground(graph, whiteBrush); // заливаем фон звезды белым цветом
-
-            pictureBox1.Image = myBitmap;
+            currentAv19 = trackBarAv19.Value;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        // Обработка движения на trackBar третьего задания
+        private void trackBarAv29_Scroll(object sender, System.EventArgs e)
         {
-            // Без bitmap появляются мерцания при рисовке изображения
-            Bitmap myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height); // буфер для Bitmap-изображения
-            Graphics graph = Graphics.FromImage(myBitmap);                       // графический объект — некий холст
-            graph.Clear(Color.White);
-
-            Brush blackBrush = new SolidBrush(Color.Black);
-            Brush whiteBrush = new SolidBrush(Color.White);
-            Pen blackPen = new Pen(Color.Black, 2);
-
-            drawLetterW(graph, blackPen);      // рисуем буквы
-            drawStar(graph, blackPen);         // рисуем звезду
-            fillBackground(graph, whiteBrush); // заливаем фон звезды белым цветом
-
-            pictureBox1.Image = myBitmap;
+            currentAv29 = trackBarAv29.Value;
         }
 
-
-        private void drawLetterW(Graphics graph, Pen pen)
+        // Обработка движения на trackBar третьего задания
+        private void trackBarBv29_Scroll(object sender, System.EventArgs e)
         {
-            const int sizeLetter = 8;             // размер буквы
-            const int distanceX = sizeLetter * 3; // дистанция между буквами по координате X
-            const int distanceY = sizeLetter * 3; // дистанция между буквами по координате Y
-            const int widthLetter = 2;            // высота буквы
-            const int heightLetter = 3;           // ширина буквы
+            currentBv29 = trackBarBv29.Value;
+        }
 
-            const int startPosX = 0;              // стартовая позиция рисования букв по X
-            const int startPosY = 0;              // стартовая позиция рисования букв по Y
-            const int firstCoordX = sizeLetter;
-            const int bottomCoordY = firstCoordX;
-            const int topCoordY = firstCoordX * widthLetter;
+        private void executeV9_Click(object sender, EventArgs e)
+        {
+            double begin = -3, end = 3, step = 0.01, x, y, a = currentAv9;
 
-            const int secondCoordX = firstCoordX + heightLetter;
-            const int thirdCoordX = secondCoordX + heightLetter;
-            const int fourthCoordX = thirdCoordX + heightLetter;
-            const int fifthCoordX = fourthCoordX + heightLetter;
-
-            for (int y = startPosY; y <= pictureBox1.Height; y += distanceY)
+            for (x = begin; x <= end; x += step)
             {
-                for (int x = startPosX; x <= pictureBox1.Width; x += distanceX)
+                y = a * x * x * x;
+
+                // Строим линию по y
+                if (x == begin)
                 {
-                    graph.DrawLines(pen, new PointF[]
-                    {
-                        new Point(firstCoordX + x, bottomCoordY + y),
-                        new Point(secondCoordX + x, topCoordY + y),
-                        new Point(thirdCoordX + x, bottomCoordY + y),
-                        new Point(fourthCoordX + x, topCoordY + y),
-                        new Point(fifthCoordX + x, bottomCoordY + y),
-                    });
+                    this.chart1.Series[2].Points.AddXY(0, y);
+                    this.chart1.Series[2].Points.AddXY(0, -y);
                 }
+
+                // Строим график только в третьей четверти
+                if (x <= 0) this.chart1.Series[0].Points.AddXY(x, y);
             }
+
+            // Строим линию по x
+            this.chart1.Series[1].Points.AddXY(begin, 0);
+            this.chart1.Series[1].Points.AddXY(end, 0);
         }
 
-        private void drawLetterS(Graphics graph, Pen pen)
+        private void executeV19_Click(object sender, EventArgs e)
         {
-            const int sizeLetter = 8;             // размер буквы
-            const int distanceX = sizeLetter * 3; // дистанция между буквами по координате X
-            const int distanceY = sizeLetter * 3; // дистанция между буквами по координате Y
+            double begin = -10, end = 10, step = 0.01, x, y, a = currentAv19;
 
-            const int startPosX = 8;              // стартовая позиция рисования букв по X
-            const int startPosY = 0;              // стартовая позиция рисования букв по Y
-            const int weightArc = sizeLetter;                        // высота полукруга
-            const int heightArc = (sizeLetter + sizeLetter * 2) / 2; // ширина полукруга
-
-            const int coordYfirstArc = sizeLetter;
-            const int coordYsecondArc = sizeLetter * 2 - sizeLetter / 4;
-            const int beginSecondArc = heightArc / 2;
-
-            for (int y = startPosY; y <= pictureBox1.Height; y += distanceY)
+            for (x = begin; x <= end; x += step)
             {
-                for (int x = startPosX; x <= pictureBox1.Width; x += distanceX)
+                y = a * x * x;
+
+                // Строим линию по y
+                if (x == begin)
                 {
-                    graph.DrawArc(pen, x, coordYfirstArc + y, heightArc, weightArc, 90, 180);
-                    graph.DrawArc(pen, x - beginSecondArc, coordYsecondArc + y, heightArc, weightArc, -90, 180);
+                    this.chart2.Series[2].Points.AddXY(0, y);
+                    this.chart2.Series[2].Points.AddXY(0, -y);
                 }
+
+                // Строим график только в четвертой четверти
+                if (x >= 0) this.chart2.Series[0].Points.AddXY(x, y);
             }
+
+            // Строим линию по x
+            this.chart2.Series[1].Points.AddXY(begin, 0);
+            this.chart2.Series[1].Points.AddXY(end, 0);
         }
 
-        private void drawLetterI(Graphics graph, Brush brush)
+        private void executeV29_Click(object sender, EventArgs e)
         {
-            const int startPos = 8;             // стартовая позиция рисования букв (изменение масштаба буквы)
-            const int distance = startPos * 3;  // дистанция между буквами
-            const int width = 2;                // ширина буквы
+            double begin = -20, end = 20, step = 0.01, x, y, a = currentAv29, b = currentBv29;
 
-            for (int w = startPos; w <= pictureBox1.Size.Width + startPos; w = w + distance)
+            for (x = begin; x <= end; x += step)
             {
-                for (int h = startPos; h <= pictureBox1.Size.Width + startPos; h = h + distance)
-                {
-                    for (int i = h; i <= h + startPos; i = i + 2)
-                    {
-                        graph.FillRectangle(brush, i, w, width, width);
-                        graph.FillRectangle(brush, i, w + startPos, width, width);
-                        graph.FillRectangle(brush, w + startPos / 2, i, width, width);
-                    }
-                }
+                y = -Math.Sqrt((b * b) * (1 - (x * x) / (a * a)));
+
+                // Строим график только в четвертой четверти
+                if (x >= 0) this.chart3.Series[0].Points.AddXY(x, y);    
             }
+
+            // Строим линии по X Y
+            this.chart3.Series[1].Points.AddXY(end, 0);
+            this.chart3.Series[1].Points.AddXY(begin, 0);
+
+            this.chart3.Series[2].Points.AddXY(0, end);
+            this.chart3.Series[2].Points.AddXY(0, begin);
         }
 
-        private void drawStar(Graphics graph, Pen blackPen)
-        {
-            graph.DrawLines(blackPen, new PointF[]
-            {
-                new Point(10 * sizeStar - correctSize, 8 * sizeStar - correctSize),
-                new Point(13 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-                new Point(12 * sizeStar - correctSize, 9 * sizeStar - correctSize),
-                new Point(14 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(11 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(10 * sizeStar - correctSize, 14 * sizeStar - correctSize),
-                new Point(9 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(8 * sizeStar - correctSize, 9 * sizeStar - correctSize),
-                new Point(7 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-                new Point(10 * sizeStar - correctSize, 8 * sizeStar - correctSize),
-            });
-        }
-
-        private void fillBackground(Graphics graph, Brush brush)
-        {
-            // Нижний многоугольник (вне фигуры)
-            graph.FillPolygon(brush, new PointF[]
-            {
-                new Point(11 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(10 * sizeStar - correctSize, 14 * sizeStar - correctSize),
-                new Point(9 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(0, 11 * sizeStar - correctSize),
-                new Point(0, pictureBox1.Size.Height),
-                new Point(pictureBox1.Size.Width, pictureBox1.Size.Height),
-                new Point(pictureBox1.Size.Width, 11 * sizeStar - correctSize),
-                new Point(11 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-            });
-
-            // Левый многоугольник (вне фигуры)
-            graph.FillPolygon(brush, new PointF[]
-            {
-                new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(8 * sizeStar - correctSize, 9 * sizeStar - correctSize),
-                new Point(7 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-                new Point(0, 0),
-                new Point(0, 11 * sizeStar - correctSize),
-                new Point(6 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-            });
-
-            // Верхний многоугольник (вне фигуры)
-            graph.FillPolygon(brush, new PointF[]
-            {
-                new Point(7 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-                new Point(10 * sizeStar - correctSize, 8 * sizeStar - correctSize),
-                new Point(13 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-                new Point(pictureBox1.Size.Width, 0),
-                new Point(0, 0),
-                new Point(7 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-            });
-
-            // Правый многоугольник (вне фигуры)
-            graph.FillPolygon(brush, new PointF[]
-            {
-                new Point(13 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-                new Point(12 * sizeStar - correctSize, 9 * sizeStar - correctSize),
-                new Point(14 * sizeStar - correctSize, 11 * sizeStar - correctSize),
-                new Point(pictureBox1.Size.Width, 11 * sizeStar - correctSize),
-                new Point(pictureBox1.Size.Width, 0),
-                new Point(13 * sizeStar - correctSize, 6 * sizeStar - correctSize),
-            });
-        }
     }
 }
