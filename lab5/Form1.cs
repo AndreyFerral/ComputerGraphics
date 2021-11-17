@@ -9,14 +9,16 @@ namespace lab5
     {
         int maxX, maxY;
         Color[] colors = new Color[6]; // цвета точек
+        const float xMin = -6f, yMin = -4f, xMax = 6f, yMax = 4f;
+        // const float xMin = -1.5f, yMin = -1f, xMax = 1.5f, yMax = 1f;
+
+        Complex firstRoot;
+        Complex secondRoot;
+        Complex thirdRoot;
 
         public FractalGraphic()
         {
             InitializeComponent();
-
-            // размеры окна
-            maxX = pbFractalExample.Width;
-            maxY = pbFractalExample.Height;
 
             colors[0] = Color.FromArgb(127, 0, 0);
             colors[1] = Color.FromArgb(255, 0, 0);
@@ -25,26 +27,92 @@ namespace lab5
             colors[4] = Color.FromArgb(0, 0, 127); 
             colors[5] = Color.FromArgb(0, 0, 255);
 
-            Drawwww();
 
-            // Запрос на выполнение отрисовки картинки с уточнением параметров её размещения
-            Bitmap img = MandelbrotSet(pictureBox1, 2, -2, 2, -2);
-            pictureBox1.Image = img;
+            // Первый фрактал
+            /*
+            firstRoot = 3/2f;
+            secondRoot = new Complex(2f, 2f);
+            thirdRoot = new Complex(2f, -2f);
+            */
+
+            // Второй фрактал
+            
+            firstRoot = 0.25;
+            secondRoot = new Complex(0.75, 1);
+            thirdRoot = new Complex(0.75, -1);
+            
+
+            // Пример
+            /*
+            firstRoot = 1f;
+            secondRoot = new Complex(-0.5, Math.Sqrt(3f) / 2);
+            thirdRoot = new Complex(-0.5, -Math.Sqrt(3f) / 2);
+            */
+
+
+            // буфер для Bitmap-изображения
+            Bitmap bitmapFirst = new Bitmap(
+                pbFractalFirst.Width,
+                pbFractalFirst.Height);
+
+            // размеры окна
+            maxX = bitmapFirst.Width;
+            maxY = bitmapFirst.Height;
+
+            DrawFractal(bitmapFirst, firstRoot, secondRoot, thirdRoot);
+           
+            
+            /*
+            // Пример
+            firstRoot = 1f;
+            secondRoot = new Complex(-0.5, Math.Sqrt(3f) / 2);
+            thirdRoot = new Complex(-0.5, -Math.Sqrt(3f) / 2);
+
+            // буфер для Bitmap-изображения
+            Bitmap bitmapExample = new Bitmap(
+                pbFractalExample.Width,
+                pbFractalExample.Height);
+
+            // размеры окна
+            maxX = bitmapExample.Width;
+            maxY = bitmapExample.Height;
+
+            DrawFractal(bitmapExample, firstRoot, secondRoot, thirdRoot);
+            */
+
         }
 
         Complex func(Complex complex)
         {
-            Complex temp = 1f;
-            return complex * complex * complex - temp;
+            // первый (x-(3/2))*(x-(2+2*i))*(x-(2-2*i))
+            // return Complex.Pow(complex, 3) - ((11 * Complex.Pow(complex, 2)) / 2) + 14 * complex - 12;
+
+            // второй (x-(1/4))*(x-(3/4+i))*(x-(3/4-i))
+            // return Complex.Pow(complex, 3) - ((7 * Complex.Pow(complex, 2)) / 4) + ((31 * complex) / 16) - (25 / 64);
+
+            // второй (x-(0.25))*(x-(0.75+i))*(x-(0.75-i))
+            return Complex.Pow(complex, 3) - 1.75 * Complex.Pow(complex, 2) + 1.9375 * complex - 0.390625;
+
+            // пример
+            // Complex temp = 1f;
+            // return complex * complex * complex - temp;
         }
 
         Complex funcDiff(Complex complex)
         {
-            Complex temp = 3f;
-            return complex * complex * temp;
-        }
+            // первый x^3-(11*x^2)/2+14*x-12
+            // return 3 * Complex.Pow(complex, 2) - 11 * complex + 14;
 
-        const float xMin = -1.5f, yMin = -1f, xMax = 1.5f, yMax = 1f;
+            // второй x^3 - ((7 * x^2) / 4) + ((31 * x) / 16) - (25 / 64)
+            // return 3 * Complex.Pow(complex, 2) - ((7 * complex) / 2) + (31 / 16);
+
+            // второй x^3 -1.75*x^2 + 1.9375*x - 0.390625
+            return 3 * Complex.Pow(complex, 2) - ((7 * complex) / 2) + 1.9375;
+
+            // пример
+            // Complex temp = 3f;
+            // return temp * complex * complex;
+        }
 
         void putPoint(Bitmap myBitmap, float x, float y, Color color)
         {
@@ -56,13 +124,15 @@ namespace lab5
             }
         }
 
-        void Drawwww() {
+        void DrawFractal(Bitmap myBitmap, Complex firstRoot, Complex secondRoot, Complex thirdRoot) {
 
             // буфер для Bitmap-изображения
+            /*
             Bitmap myBitmap = new Bitmap(
                 pbFractalExample.Width, 
                 pbFractalExample.Height); 
-            
+            */
+
             // графический объект — некий холст
             Graphics graph = Graphics.FromImage(myBitmap);   
             
@@ -74,9 +144,14 @@ namespace lab5
             float yInc = (yMax - yMin) / maxY;
 
             Complex[] root = new Complex[3];
+            /*
             root[0] = 1f; 
             root[1] = new Complex(-0.5, Math.Sqrt(3f) / 2);
             root[2] = new Complex(-0.5, -Math.Sqrt(3f) / 2);
+            */
+            root[0] = firstRoot;
+            root[1] = secondRoot;
+            root[2] = thirdRoot;
 
             for (re = xMin; re < xMax; re += xInc) 
             {
@@ -87,6 +162,8 @@ namespace lab5
                     int level = 0;
                     const int minLevel = 0;
                     const int maxLevel = 100;
+
+                    Complex complex1 = 1;
 
                     do
                     {
@@ -111,57 +188,10 @@ namespace lab5
                     }
                 }
             }
+
+            // pbFractalFirst.Image = myBitmap;
+            // pbFractalSecond.Image = myBitmap;
             pbFractalExample.Image = myBitmap;
-        }
-
-        static Bitmap MandelbrotSet(PictureBox pictureBox1, double maxr, double minr, double maxi, double mini)
-        {
-            double currentmaxr = maxr;
-            double currentmaxi = maxi;
-            double currentminr = minr;
-            double currentmini = mini;
-
-            //размер изображения в соответствии с размерами pictureBox1
-            Bitmap img = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            double zx = 0;
-            double zy = 0;
-            double cx = 0;
-            double cy = 0;
-            double xjump = ((maxr - minr) / Convert.ToDouble(img.Width));
-            double yjump = ((maxi - mini) / Convert.ToDouble(img.Height));
-            double tempzx = 0;
-            //Размытость изображения
-            int loopmax = 1000;
-            int loopgo = 0;
-            for (int x = 0; x < img.Width; x++)
-            {
-                cx = (xjump * x) - Math.Abs(minr);
-                for (int y = 0; y < img.Height; y++)
-                {
-                    zx = 0;
-                    zy = 0;
-                    cy = (yjump * y) - Math.Abs(mini);
-                    loopgo = 0;
-                    while (zx * zx + zy * zy <= 4 && loopgo < loopmax)
-                    {
-                        loopgo++;
-                        tempzx = zx;
-                        zx = (zx * zx) - (zy * zy) + cx;
-                        zy = (2 * tempzx * zy) + cy;
-                    }
-                    //Задание цветовой палитры отображения изображения
-                    //Для внешнего окружения Множества Мандельброта
-                    if (loopgo != loopmax)
-                        img.SetPixel(x, y, Color.FromArgb(loopgo % 128 * 2, loopgo % 4 * 33, loopgo % 2 * 66));
-                    //альтернативная запись в таком формате .FromArgb(190,44,66));
-                    else
-                        //Для внутреннего окружения Множества Мандельброта
-                        img.SetPixel(x, y, Color.Red);
-
-                }
-            }
-            return img;
-
         }
     }
 }
