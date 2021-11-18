@@ -29,42 +29,17 @@ namespace lab5
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.pbFractalExample = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pbFractalSecond = new System.Windows.Forms.PictureBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pbFractalFirst = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFractalExample)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalSecond)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalFirst)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage3.Controls.Add(this.pbFractalExample);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(576, 502);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Пример";
-            // 
-            // pbFractalExample
-            // 
-            this.pbFractalExample.Location = new System.Drawing.Point(0, 0);
-            this.pbFractalExample.Margin = new System.Windows.Forms.Padding(4);
-            this.pbFractalExample.Name = "pbFractalExample";
-            this.pbFractalExample.Size = new System.Drawing.Size(580, 510);
-            this.pbFractalExample.TabIndex = 4;
-            this.pbFractalExample.TabStop = false;
             // 
             // tabPage2
             // 
@@ -112,7 +87,6 @@ namespace lab5
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -134,8 +108,6 @@ namespace lab5
             this.Name = "FractalGraphic";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Фрактальная графика";
-            this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbFractalExample)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalSecond)).EndInit();
             this.tabPage1.ResumeLayout(false);
@@ -146,9 +118,6 @@ namespace lab5
         }
 
         #endregion
-
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.PictureBox pbFractalExample;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.PictureBox pbFractalSecond;
         private System.Windows.Forms.TabPage tabPage1;

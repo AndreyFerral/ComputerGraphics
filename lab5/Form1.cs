@@ -9,8 +9,7 @@ namespace lab5
     {
         int maxX, maxY;
         Color[] colors = new Color[6]; // цвета точек
-        const float xMin = -6f, yMin = -4f, xMax = 6f, yMax = 4f;
-        // const float xMin = -1.5f, yMin = -1f, xMax = 1.5f, yMax = 1f;
+        const float xMin = -6, yMin = -4, xMax = 6, yMax = 4;
 
         Complex firstRoot;
         Complex secondRoot;
@@ -27,29 +26,15 @@ namespace lab5
             colors[4] = Color.FromArgb(0, 0, 127); 
             colors[5] = Color.FromArgb(0, 0, 255);
 
+            const int exampleFractal = 0;
+            const int firstFractal = 1;
+            const int secondFractal = 2;
 
-            // Первый фрактал
-            /*
-            firstRoot = 3/2f;
-            secondRoot = new Complex(2f, 2f);
-            thirdRoot = new Complex(2f, -2f);
-            */
-
-            // Второй фрактал
+            // Первый фрактал          
+            firstRoot = 1.5;
+            secondRoot = new Complex(2, 2);
+            thirdRoot = new Complex(2, -2);
             
-            firstRoot = 0.25;
-            secondRoot = new Complex(0.75, 1);
-            thirdRoot = new Complex(0.75, -1);
-            
-
-            // Пример
-            /*
-            firstRoot = 1f;
-            secondRoot = new Complex(-0.5, Math.Sqrt(3f) / 2);
-            thirdRoot = new Complex(-0.5, -Math.Sqrt(3f) / 2);
-            */
-
-
             // буфер для Bitmap-изображения
             Bitmap bitmapFirst = new Bitmap(
                 pbFractalFirst.Width,
@@ -59,59 +44,76 @@ namespace lab5
             maxX = bitmapFirst.Width;
             maxY = bitmapFirst.Height;
 
-            DrawFractal(bitmapFirst, firstRoot, secondRoot, thirdRoot);
-           
-            
-            /*
+            pbFractalFirst.Image = drawFractal(bitmapFirst, firstFractal);
+
+            // Второй фрактал
+            firstRoot = 0.25;
+            secondRoot = new Complex(0.75, 1);
+            thirdRoot = new Complex(0.75, -1);
+
+            // буфер для Bitmap-изображения
+            Bitmap bitmapSecond = new Bitmap(
+                pbFractalSecond.Width,
+                pbFractalSecond.Height);
+
+            // размеры окна
+            maxX = bitmapSecond.Width;
+            maxY = bitmapSecond.Height;
+
+            pbFractalSecond.Image = drawFractal(bitmapSecond, secondFractal);  
+                
             // Пример
+            /*
             firstRoot = 1f;
             secondRoot = new Complex(-0.5, Math.Sqrt(3f) / 2);
             thirdRoot = new Complex(-0.5, -Math.Sqrt(3f) / 2);
-
-            // буфер для Bitmap-изображения
-            Bitmap bitmapExample = new Bitmap(
-                pbFractalExample.Width,
-                pbFractalExample.Height);
-
-            // размеры окна
-            maxX = bitmapExample.Width;
-            maxY = bitmapExample.Height;
-
-            DrawFractal(bitmapExample, firstRoot, secondRoot, thirdRoot);
             */
-
         }
 
-        Complex func(Complex complex)
+        Complex func(Complex complex, int fractal)
         {
-            // первый (x-(3/2))*(x-(2+2*i))*(x-(2-2*i))
-            // return Complex.Pow(complex, 3) - ((11 * Complex.Pow(complex, 2)) / 2) + 14 * complex - 12;
+            Complex answer;
 
-            // второй (x-(1/4))*(x-(3/4+i))*(x-(3/4-i))
-            // return Complex.Pow(complex, 3) - ((7 * Complex.Pow(complex, 2)) / 4) + ((31 * complex) / 16) - (25 / 64);
-
-            // второй (x-(0.25))*(x-(0.75+i))*(x-(0.75-i))
-            return Complex.Pow(complex, 3) - 1.75 * Complex.Pow(complex, 2) + 1.9375 * complex - 0.390625;
-
-            // пример
-            // Complex temp = 1f;
-            // return complex * complex * complex - temp;
+            switch (fractal)
+            {
+                case 1:
+                    // первый (x-(3/2))*(x-(2+2*i))*(x-(2-2*i))
+                    answer = Complex.Pow(complex, 3) - ((11 * Complex.Pow(complex, 2)) / 2) + 14 * complex - 12;
+                    break;
+                case 2:
+                    // второй (x-(0.25))*(x-(0.75+i))*(x-(0.75-i))
+                    answer = Complex.Pow(complex, 3) - 1.75 * Complex.Pow(complex, 2) + 1.9375 * complex - 0.390625;
+                    break;
+                default:
+                    // пример
+                    Complex temp = 1f;
+                    answer = complex * complex * complex - temp;
+                    break;
+            }
+            return answer;
         }
 
-        Complex funcDiff(Complex complex)
+        Complex funcDiff(Complex complex, int fractal)
         {
-            // первый x^3-(11*x^2)/2+14*x-12
-            // return 3 * Complex.Pow(complex, 2) - 11 * complex + 14;
+            Complex answer;
 
-            // второй x^3 - ((7 * x^2) / 4) + ((31 * x) / 16) - (25 / 64)
-            // return 3 * Complex.Pow(complex, 2) - ((7 * complex) / 2) + (31 / 16);
-
-            // второй x^3 -1.75*x^2 + 1.9375*x - 0.390625
-            return 3 * Complex.Pow(complex, 2) - ((7 * complex) / 2) + 1.9375;
-
-            // пример
-            // Complex temp = 3f;
-            // return temp * complex * complex;
+            switch (fractal)
+            {
+                case 1:
+                    // первый x^3-(11*x^2)/2+14*x-12
+                    answer = 3 * Complex.Pow(complex, 2) - 11 * complex + 14;
+                    break;
+                case 2:
+                    // второй x^3 - ((7 * x^2) / 4) + ((31 * x) / 16) - (25 / 64)
+                    answer = 3 * Complex.Pow(complex, 2) - ((7 * complex) / 2) + 1.9375;
+                    break;
+                default:
+                    // пример
+                    Complex temp = 3f;
+                    answer = temp * complex * complex;
+                    break;
+            }
+            return answer;
         }
 
         void putPoint(Bitmap myBitmap, float x, float y, Color color)
@@ -124,14 +126,7 @@ namespace lab5
             }
         }
 
-        void DrawFractal(Bitmap myBitmap, Complex firstRoot, Complex secondRoot, Complex thirdRoot) {
-
-            // буфер для Bitmap-изображения
-            /*
-            Bitmap myBitmap = new Bitmap(
-                pbFractalExample.Width, 
-                pbFractalExample.Height); 
-            */
+        Bitmap drawFractal(Bitmap myBitmap, int fractal) {
 
             // графический объект — некий холст
             Graphics graph = Graphics.FromImage(myBitmap);   
@@ -144,11 +139,6 @@ namespace lab5
             float yInc = (yMax - yMin) / maxY;
 
             Complex[] root = new Complex[3];
-            /*
-            root[0] = 1f; 
-            root[1] = new Complex(-0.5, Math.Sqrt(3f) / 2);
-            root[2] = new Complex(-0.5, -Math.Sqrt(3f) / 2);
-            */
             root[0] = firstRoot;
             root[1] = secondRoot;
             root[2] = thirdRoot;
@@ -163,18 +153,16 @@ namespace lab5
                     const int minLevel = 0;
                     const int maxLevel = 100;
 
-                    Complex complex1 = 1;
-
                     do
                     {
-                        if (Complex.Abs(funcDiff(eq)) < 0.0001) level = -1;
+                        if (Complex.Abs(funcDiff(eq, fractal)) < 0.0001) level = -1;
 
                         else {
-                            eq = eq - func(eq) / funcDiff(eq);
+                            eq = eq - func(eq, fractal) / funcDiff(eq, fractal);
                             level++; 
                         }
                     } 
-                    while (level >= minLevel && level < maxLevel && Complex.Abs(func(eq)) >= 0.01);
+                    while (level >= minLevel && level < maxLevel && Complex.Abs(func(eq, fractal)) >= 0.01);
 
                     if (level < minLevel) continue;
 
@@ -189,9 +177,7 @@ namespace lab5
                 }
             }
 
-            // pbFractalFirst.Image = myBitmap;
-            // pbFractalSecond.Image = myBitmap;
-            pbFractalExample.Image = myBitmap;
+            return myBitmap;
         }
     }
 }
