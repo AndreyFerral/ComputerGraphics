@@ -35,12 +35,10 @@ namespace lab5
             secondRoot = new Complex(2, 2);
             thirdRoot = new Complex(2, -2);
             
-            // буфер для Bitmap-изображения
-            Bitmap bitmapFirst = new Bitmap(
-                pbFractalFirst.Width,
-                pbFractalFirst.Height);
+            // Буфер для Bitmap-изображения
+            Bitmap bitmapFirst = new Bitmap(pbFractalFirst.Width, pbFractalFirst.Height);
 
-            // размеры окна
+            // Размеры окна
             maxX = bitmapFirst.Width;
             maxY = bitmapFirst.Height;
 
@@ -51,23 +49,69 @@ namespace lab5
             secondRoot = new Complex(0.75, 1);
             thirdRoot = new Complex(0.75, -1);
 
-            // буфер для Bitmap-изображения
-            Bitmap bitmapSecond = new Bitmap(
-                pbFractalSecond.Width,
-                pbFractalSecond.Height);
+            // Буфер для Bitmap-изображения
+            Bitmap bitmapSecond = new Bitmap(pbFractalSecond.Width, pbFractalSecond.Height);
 
-            // размеры окна
+            // Размеры окна
             maxX = bitmapSecond.Width;
             maxY = bitmapSecond.Height;
 
-            pbFractalSecond.Image = drawFractal(bitmapSecond, secondFractal);  
-                
+            pbFractalSecond.Image = drawFractal(bitmapSecond, secondFractal);
+
             // Пример
             /*
             firstRoot = 1f;
             secondRoot = new Complex(-0.5, Math.Sqrt(3f) / 2);
             thirdRoot = new Complex(-0.5, -Math.Sqrt(3f) / 2);
             */
+
+            // Буфер для Bitmap-изображения
+            Bitmap bitmapOtherTask = new Bitmap(pbOtherTask.Width, pbOtherTask.Height);
+            pbOtherTask.Image = drawOtherTask(bitmapOtherTask);
+        }
+
+        Bitmap drawOtherTask(Bitmap myBitmap) {
+
+            // Графический объект — некий холст
+            Graphics graph = Graphics.FromImage(myBitmap);
+
+            // Очищаем область
+            graph.Clear(Color.White);
+
+            // Ручка и кисть для рисования
+            Pen blackPen = new Pen(Color.Black);
+            Pen redPen = new Pen(Color.Red);
+            SolidBrush whiteBrush = new SolidBrush(Color.White);
+
+            Random rnd = new Random();
+
+            // Радиусы окружностей
+            int radiusOne = rnd.Next(50, 100);
+            int radiusTwo = rnd.Next(50, 100);
+
+            // Координаты первой окружности
+            int coordXfirst = rnd.Next(radiusOne, myBitmap.Height / 2);
+            int coordYfirst = rnd.Next(radiusOne, myBitmap.Height / 2);
+            Rectangle firstCircle = new Rectangle(coordXfirst - radiusOne, coordYfirst - radiusOne, radiusOne + radiusOne, radiusOne + radiusOne);
+
+            // Координаты второй окружности
+            int coordXsecond = rnd.Next(radiusTwo + myBitmap.Height / 2, myBitmap.Width - radiusTwo);
+            int coordYsecond = rnd.Next(radiusTwo + myBitmap.Height / 2, myBitmap.Height - radiusTwo);
+            Rectangle secondCircle = new Rectangle(coordXsecond - radiusTwo, coordYsecond - radiusTwo, radiusTwo + radiusTwo, radiusTwo + radiusTwo);
+
+            // Линия между окружностями
+            graph.DrawLine(blackPen, coordXfirst, coordYfirst, coordXsecond, coordYsecond);
+            graph.DrawLine(redPen, coordXfirst, coordYfirst + radiusOne, coordXsecond, coordYsecond - radiusTwo);
+
+            // Рисование первой окружности
+            graph.FillEllipse(whiteBrush, firstCircle);
+            graph.DrawEllipse(blackPen, firstCircle);
+
+            // Рисование второй окружности
+            graph.FillEllipse(whiteBrush, secondCircle);
+            graph.DrawEllipse(blackPen, secondCircle);
+
+            return myBitmap;
         }
 
         Complex func(Complex complex, int fractal)

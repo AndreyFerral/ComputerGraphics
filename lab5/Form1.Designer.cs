@@ -34,11 +34,15 @@ namespace lab5
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pbFractalFirst = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.pbOtherTask = new System.Windows.Forms.PictureBox();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalSecond)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalFirst)).BeginInit();
             this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOtherTask)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPage2
@@ -87,6 +91,7 @@ namespace lab5
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -94,6 +99,26 @@ namespace lab5
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(584, 531);
             this.tabControl1.TabIndex = 2;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage3.Controls.Add(this.pbOtherTask);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(576, 502);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Дополнительное";
+            // 
+            // pbOtherTask
+            // 
+            this.pbOtherTask.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbOtherTask.Location = new System.Drawing.Point(0, 0);
+            this.pbOtherTask.Margin = new System.Windows.Forms.Padding(4);
+            this.pbOtherTask.Name = "pbOtherTask";
+            this.pbOtherTask.Size = new System.Drawing.Size(576, 502);
+            this.pbOtherTask.TabIndex = 6;
+            this.pbOtherTask.TabStop = false;
             // 
             // FractalGraphic
             // 
@@ -113,6 +138,8 @@ namespace lab5
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalFirst)).EndInit();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbOtherTask)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -123,6 +150,8 @@ namespace lab5
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.PictureBox pbFractalFirst;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.PictureBox pbOtherTask;
     }
 }
 
