@@ -1,6 +1,6 @@
 ﻿/*
-П1 Вывести на экран изображение поверхности 
-z = sin(x^2 + y^2) в центральной проекции, 
+1. Вывести на экран изображение поверхности 
+z = x*(x – y)*(x + y) в параллельной проекции, 
 используя алгоритм плавающего горизонта для удаления невидимых линий.
 */
 
@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace lab4
 {
-    public class ClassFirstExample
+    public class ClassFirst
     {
         private static int nX = 60;
         private static int nY = 60;
@@ -19,9 +19,9 @@ namespace lab4
         private float exMax, exMin, eyMax, eyMin;
         private int gmex, gmey;
 
-        private float xV = 5, yV = 3.5f, zV = 3; // положение наблюдателя
-        private float d = 10;                    // расстояние до плоскости проекции
-        private float cosA, sinA;                // меридиана точки наблюдения
+        // private float xV = 5, yV = 3.5f, zV = 3; // положение наблюдателя
+        // private float d = 10;                    // расстояние до плоскости проекции
+        // private float cosA, sinA;                // меридиана точки наблюдения
 
         private int[] phiMin;
         private int[] phiMax;
@@ -29,7 +29,7 @@ namespace lab4
         private float[] cVals = new float[nY + 1];
         private float cVal;
 
-        public ClassFirstExample(Bitmap myBitmap)
+        public ClassFirst(Bitmap myBitmap)
         {
             // Инициализация графического режима
             hY = (yMax - yMin) / nY;
@@ -39,8 +39,8 @@ namespace lab4
             gmex = myBitmap.Width;
             gmey = myBitmap.Height;
 
-            cosA = xV / (float)Math.Sqrt(xV * xV + yV * yV);
-            sinA = yV / (float)Math.Sqrt(xV * xV + yV * yV);
+            // cosA = xV / (float)Math.Sqrt(xV * xV + yV * yV);
+            // sinA = yV / (float)Math.Sqrt(xV * xV + yV * yV);
 
             phiMin = new int[gmex];
             phiMax = new int[gmex];
@@ -83,6 +83,7 @@ namespace lab4
 
                     // Рисование нижней части плоскости
                     if (y0 >= y1 && phiMin[x] > y) {
+                        // Эта функция не дорисовывает - пофиксить
                         myBitmap.SetPixel(x, gmey - y, Color.Black);
                         phiMin[x] = y;
                     }
@@ -90,10 +91,11 @@ namespace lab4
                     accX += dx;
                     accY += dy;
 
-                    if (accX >= maxAcc) {
+                    if (accX >= maxAcc){
                         accX -= maxAcc;
                         x++;
                     }
+
                     else if (accX < 0) {
                         accX += maxAcc;
                         x--;
@@ -103,6 +105,7 @@ namespace lab4
                         accY -= maxAcc;
                         y++;
                     }
+
                     else if (accY < 0) {
                         accY += maxAcc;
                         y--;
@@ -121,19 +124,20 @@ namespace lab4
         // Функция z = f(x,y)
         private float fz(float x, float y)
         {
-            return ((float)Math.Sin(x * x + y * y));
+            // z = x * (x – y)*(x + y)
+            return x * (x - y) * (x + y);
         }
 
-        // x координата на плоскости центральной проекциии
+        // x координата на плоскости параллельной проекциии
         private float ex(float x, float y, float z)
         {
-            return (-d * (-(x - xV) * sinA + (y - yV) * cosA)) / ((x - xV) * cosA + (y - yV) * sinA);
+            return (float)(-0.2 * x + 0.4 * y);
         }
 
-        // y координата на плоскости центральной проекции
+        // y координата на плоскости параллельной проекции
         private float ey(float x, float y, float z)
         {
-            return (-d * (z - zV)) / ((x - xV) * cosA + (y - yV) * sinA);
+            return (float)(-0.1 * x + 0.2 * z);
         }
 
         // Вычисление экранных координат
@@ -161,7 +165,7 @@ namespace lab4
             else
             {
                 Pen blackPen = new Pen(Color.Black);
-                // graph.DrawLine(blackPen, x0, y0, x1, y1);
+                graph.DrawLine(blackPen, x0, y0, x1, y1);
             }
         }
 
@@ -214,7 +218,8 @@ namespace lab4
             cVal = fz(xMax, yMax);
             for (int i = nY - 1; i >= 0; i--)
             {
-                cVals[i + 1] = cVal; y = yMin + hY * i;
+                cVals[i + 1] = cVal; 
+                y = yMin + hY * i;
                 cVal = fz(xMax, y);
                 vectPhi(myBitmap, graph, xMax, y + hY, cVals[i + 1], xMax, y, cVal, 1);
             }

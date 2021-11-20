@@ -65,7 +65,7 @@ namespace lab4
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(584, 531);
+            this.tabControl1.Size = new System.Drawing.Size(654, 531);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
@@ -76,7 +76,7 @@ namespace lab4
             this.tabPage1.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(5);
-            this.tabPage1.Size = new System.Drawing.Size(576, 502);
+            this.tabPage1.Size = new System.Drawing.Size(646, 502);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Первый";
             // 
@@ -85,7 +85,7 @@ namespace lab4
             this.pbFirst.Location = new System.Drawing.Point(0, 0);
             this.pbFirst.Margin = new System.Windows.Forms.Padding(5);
             this.pbFirst.Name = "pbFirst";
-            this.pbFirst.Size = new System.Drawing.Size(580, 510);
+            this.pbFirst.Size = new System.Drawing.Size(646, 502);
             this.pbFirst.TabIndex = 5;
             this.pbFirst.TabStop = false;
             // 
@@ -97,7 +97,7 @@ namespace lab4
             this.tabPage2.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(5);
-            this.tabPage2.Size = new System.Drawing.Size(576, 502);
+            this.tabPage2.Size = new System.Drawing.Size(646, 502);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Второй";
             // 
@@ -106,7 +106,7 @@ namespace lab4
             this.pbSecond.Location = new System.Drawing.Point(0, 0);
             this.pbSecond.Margin = new System.Windows.Forms.Padding(5);
             this.pbSecond.Name = "pbSecond";
-            this.pbSecond.Size = new System.Drawing.Size(580, 510);
+            this.pbSecond.Size = new System.Drawing.Size(646, 502);
             this.pbSecond.TabIndex = 5;
             this.pbSecond.TabStop = false;
             // 
@@ -116,7 +116,7 @@ namespace lab4
             this.tabPage3.Controls.Add(this.pbThird);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(576, 502);
+            this.tabPage3.Size = new System.Drawing.Size(622, 434);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Третий";
             // 
@@ -125,7 +125,7 @@ namespace lab4
             this.pbThird.Location = new System.Drawing.Point(0, 0);
             this.pbThird.Margin = new System.Windows.Forms.Padding(5);
             this.pbThird.Name = "pbThird";
-            this.pbThird.Size = new System.Drawing.Size(580, 510);
+            this.pbThird.Size = new System.Drawing.Size(646, 502);
             this.pbThird.TabIndex = 6;
             this.pbThird.TabStop = false;
             // 
@@ -135,16 +135,17 @@ namespace lab4
             this.tabPage4.Controls.Add(this.pbFirstExample);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(576, 502);
+            this.tabPage4.Size = new System.Drawing.Size(646, 502);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Пример1";
             // 
             // pbFirstExample
             // 
+            this.pbFirstExample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbFirstExample.Location = new System.Drawing.Point(0, 0);
             this.pbFirstExample.Margin = new System.Windows.Forms.Padding(5);
             this.pbFirstExample.Name = "pbFirstExample";
-            this.pbFirstExample.Size = new System.Drawing.Size(580, 510);
+            this.pbFirstExample.Size = new System.Drawing.Size(646, 502);
             this.pbFirstExample.TabIndex = 6;
             this.pbFirstExample.TabStop = false;
             // 
@@ -154,16 +155,17 @@ namespace lab4
             this.tabPage5.Controls.Add(this.pbSecondExample);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(576, 502);
+            this.tabPage5.Size = new System.Drawing.Size(646, 502);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Пример2";
             // 
             // pbSecondExample
             // 
+            this.pbSecondExample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbSecondExample.Location = new System.Drawing.Point(0, 0);
             this.pbSecondExample.Margin = new System.Windows.Forms.Padding(5);
             this.pbSecondExample.Name = "pbSecondExample";
-            this.pbSecondExample.Size = new System.Drawing.Size(580, 510);
+            this.pbSecondExample.Size = new System.Drawing.Size(646, 502);
             this.pbSecondExample.TabIndex = 6;
             this.pbSecondExample.TabStop = false;
             // 
@@ -171,13 +173,15 @@ namespace lab4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 531);
+            this.ClientSize = new System.Drawing.Size(654, 531);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(670, 570);
+            this.MinimumSize = new System.Drawing.Size(670, 570);
             this.Name = "ComputerGraphics";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Трёхмерная графика";
+            this.Text = "Построение плоскостей";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbFirst)).EndInit();

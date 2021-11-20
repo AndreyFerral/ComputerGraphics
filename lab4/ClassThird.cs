@@ -1,6 +1,6 @@
 ﻿/*
-П2 Вывести на экран изображение поверхности 
-z = 7 * sin(x) * sin(y) в параллельной проекции, 
+3. Вывести на экран изображение поверхности 
+z = (x * y) / (x^2 + y^2 + 1) в параллельной проекции, 
 используя метод художника для удаления невидимых линий.
 */
 
@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace lab4
 {
-    public class ClassSecondExample
+    public class ClassThird
     {
         private static int nX = 60;
         private static int nY = 60;
@@ -19,7 +19,7 @@ namespace lab4
         private float exMax, exMin, eyMax, eyMin;
         private int gmex, gmey;
 
-        public ClassSecondExample(Bitmap myBitmap)
+        public ClassThird(Bitmap myBitmap)
         {
             // Подготовка окна вывода
             hY = (yMax - yMin) / nY;
@@ -97,20 +97,20 @@ namespace lab4
         // Функция z = f(x,y)
         private float fz(float x, float y)
         {
-            // z = 7 * sin(x) * sin(y)
-            return 7f * (float)Math.Sin(x) * (float)Math.Sin(y);
+            // z = (x * y) / (x^2 + y^2 + 1)
+            return (x * y) / (float)(Math.Pow(x, 2) + Math.Pow(y, 2) + 1);
         }
 
         // x координата на плоскости параллельной проекциии
         private float ex(float x, float y, float z)
         {
-            return y - 0.7f * x;
+            return (float)(-0.2 * x + 0.16 * y);
         }
 
         // y координата на плоскости параллельной проекции
         private float ey(float x, float y, float z)
         {
-            return z - 0.7f * x;
+            return (float)(-0.1 * x + 0.8 * z);
         }
 
         // Вычисление координат полигона

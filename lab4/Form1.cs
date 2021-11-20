@@ -10,16 +10,28 @@ namespace lab4
         {
             InitializeComponent();
 
-            // буфер для Bitmap-изображения
-            Bitmap bitmapFirstExample = new Bitmap(pbFirstExample.Width, pbFirstExample.Height);
+            // Первое задание
+            Bitmap bitmapFirst = new Bitmap(pbFirst.Width, pbFirst.Height);
+            ClassFirst first = new ClassFirst(bitmapFirst);
+            pbFirst.Image = first.startDraw(bitmapFirst);
 
+            // Второе задание
+            Bitmap bitmapSecond = new Bitmap(pbSecond.Width, pbSecond.Height);
+            ClassSecond second = new ClassSecond(bitmapSecond);
+            pbSecond.Image = second.startDraw(bitmapSecond);
+
+            // Третье задание
+            Bitmap bitmapThird = new Bitmap(pbThird.Width, pbThird.Height);
+            ClassThird third = new ClassThird(bitmapThird);
+            pbThird.Image = third.startDraw(bitmapThird);
+
+            // Первый пример
+            Bitmap bitmapFirstExample = new Bitmap(pbFirstExample.Width, pbFirstExample.Height);
             ClassFirstExample firstEx = new ClassFirstExample(bitmapFirstExample);
             pbFirstExample.Image = firstEx.startDraw(bitmapFirstExample);
 
-            // буфер для Bitmap-изображения
+            // Второй пример
             Bitmap bitmapSecondExample = new Bitmap(pbSecondExample.Width, pbSecondExample.Height);
-
-            // Первый пример
             ClassSecondExample secondEx = new ClassSecondExample(bitmapSecondExample);
             pbSecondExample.Image = secondEx.startDraw(bitmapSecondExample);         
         }
