@@ -1,7 +1,7 @@
 ﻿
 namespace lab4
 {
-    partial class ComputerGraphics
+    partial class BuildSurface
     {
         /// <summary>
         /// Обязательная переменная конструктора.

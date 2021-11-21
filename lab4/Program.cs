@@ -16,7 +16,7 @@ namespace lab4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ComputerGraphics());
+            Application.Run(new BuildSurface());
         }
     }
 }
