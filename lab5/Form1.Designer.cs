@@ -34,15 +34,19 @@ namespace lab5
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pbFractalFirst = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.pbOtherTask = new System.Windows.Forms.PictureBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.pbFractalExample = new System.Windows.Forms.PictureBox();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalSecond)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalFirst)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbOtherTask)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFractalExample)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPage2
@@ -92,6 +96,7 @@ namespace lab5
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -100,25 +105,43 @@ namespace lab5
             this.tabControl1.Size = new System.Drawing.Size(584, 531);
             this.tabControl1.TabIndex = 2;
             // 
-            // tabPage3
+            // tabPage4
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage3.Controls.Add(this.pbOtherTask);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(576, 502);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Дополнительное";
+            this.tabPage4.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage4.Controls.Add(this.pbOtherTask);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(576, 502);
+            this.tabPage4.TabIndex = 2;
+            this.tabPage4.Text = "Дополнительное";
             // 
             // pbOtherTask
             // 
-            this.pbOtherTask.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbOtherTask.Location = new System.Drawing.Point(0, 0);
             this.pbOtherTask.Margin = new System.Windows.Forms.Padding(4);
             this.pbOtherTask.Name = "pbOtherTask";
-            this.pbOtherTask.Size = new System.Drawing.Size(576, 502);
+            this.pbOtherTask.Size = new System.Drawing.Size(580, 510);
             this.pbOtherTask.TabIndex = 6;
             this.pbOtherTask.TabStop = false;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage3.Controls.Add(this.pbFractalExample);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(576, 502);
+            this.tabPage3.TabIndex = 3;
+            this.tabPage3.Text = "Пример";
+            // 
+            // pbFractalExample
+            // 
+            this.pbFractalExample.Location = new System.Drawing.Point(0, 0);
+            this.pbFractalExample.Margin = new System.Windows.Forms.Padding(4);
+            this.pbFractalExample.Name = "pbFractalExample";
+            this.pbFractalExample.Size = new System.Drawing.Size(580, 510);
+            this.pbFractalExample.TabIndex = 7;
+            this.pbFractalExample.TabStop = false;
             // 
             // FractalGraphic
             // 
@@ -138,8 +161,10 @@ namespace lab5
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbFractalFirst)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbOtherTask)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbFractalExample)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -150,8 +175,10 @@ namespace lab5
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.PictureBox pbFractalFirst;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.PictureBox pbOtherTask;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.PictureBox pbFractalExample;
     }
 }
 
