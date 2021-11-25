@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassCircle.cs" />
     <Compile Include="Surface.cs" />
     <Compile Include="ArthistMethod.cs" />
     <Compile Include="ClassFirst.cs" />

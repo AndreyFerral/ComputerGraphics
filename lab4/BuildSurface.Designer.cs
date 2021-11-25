@@ -40,6 +40,9 @@ namespace lab4
             this.pbFirstExample = new System.Windows.Forms.PictureBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.pbSecondExample = new System.Windows.Forms.PictureBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.pbCircle = new System.Windows.Forms.PictureBox();
+            this.btnStart = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFirst)).BeginInit();
@@ -51,6 +54,8 @@ namespace lab4
             ((System.ComponentModel.ISupportInitialize)(this.pbFirstExample)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSecondExample)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCircle)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -58,6 +63,7 @@ namespace lab4
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -116,7 +122,7 @@ namespace lab4
             this.tabPage3.Controls.Add(this.pbThird);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(622, 434);
+            this.tabPage3.Size = new System.Drawing.Size(646, 502);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Третий";
             // 
@@ -169,7 +175,37 @@ namespace lab4
             this.pbSecondExample.TabIndex = 6;
             this.pbSecondExample.TabStop = false;
             // 
-            // ComputerGraphics
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage6.Controls.Add(this.btnStart);
+            this.tabPage6.Controls.Add(this.pbCircle);
+            this.tabPage6.Location = new System.Drawing.Point(4, 25);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(646, 502);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Дополнительное";
+            // 
+            // pbCircle
+            // 
+            this.pbCircle.Location = new System.Drawing.Point(0, 0);
+            this.pbCircle.Margin = new System.Windows.Forms.Padding(5);
+            this.pbCircle.Name = "pbCircle";
+            this.pbCircle.Size = new System.Drawing.Size(646, 502);
+            this.pbCircle.TabIndex = 7;
+            this.pbCircle.TabStop = false;
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(538, 12);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(100, 25);
+            this.btnStart.TabIndex = 8;
+            this.btnStart.Text = "Запуск";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // BuildSurface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -179,7 +215,7 @@ namespace lab4
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(670, 570);
             this.MinimumSize = new System.Drawing.Size(670, 570);
-            this.Name = "ComputerGraphics";
+            this.Name = "BuildSurface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Построение плоскостей";
             this.tabControl1.ResumeLayout(false);
@@ -193,6 +229,8 @@ namespace lab4
             ((System.ComponentModel.ISupportInitialize)(this.pbFirstExample)).EndInit();
             this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbSecondExample)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbCircle)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -210,6 +248,9 @@ namespace lab4
         private System.Windows.Forms.PictureBox pbFirstExample;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.PictureBox pbSecondExample;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.PictureBox pbCircle;
+        private System.Windows.Forms.Button btnStart;
     }
 }
 

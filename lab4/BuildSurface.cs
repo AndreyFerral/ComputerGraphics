@@ -6,9 +6,12 @@ namespace lab4
 {
     public partial class BuildSurface : Form
     {
+        Timer myTimer;
+
         public BuildSurface()
         {
             InitializeComponent();
+            myTimer = new Timer();
 
             // Первое задание
             ClassFirst first = new ClassFirst();
@@ -35,6 +38,12 @@ namespace lab4
 
             Bitmap myBitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.Image = surface.startDraw(myBitmap);
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            ClassCircle circle = new ClassCircle(pbCircle, myTimer);
+            circle.ActivateTimer();
         }
     }
 }
