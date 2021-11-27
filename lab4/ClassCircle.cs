@@ -52,7 +52,7 @@ namespace lab4
 
         public void ActivateTimer()
         {
-            myTimer.Interval = 500;
+            myTimer.Interval = 50;
             myTimer.Enabled = true;
             myTimer.Tick += new EventHandler(TimerEventProcessor);
             myTimer.Start();
@@ -61,29 +61,31 @@ namespace lab4
         private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
         {
             // Ручка для рисования
-            Pen blackPen = new Pen(Color.Black, 2);
-            
-            // Заполняем сектор цветом из массива кистей
-            graph.FillPie(brushs[idColor], circle, currentSectorDegree, sectorDegree);
+            Pen blackPen = new Pen(Color.Black, 3);
 
-            // Обводим контур цветом из массива ручек
-            graph.DrawPie(pens[idColor], circle, currentSectorDegree, sectorDegree);
+            for (idColor = idStartColor; idColor < countSectors; idColor++) {
+                
+                numberIteration++;
+                if (numberIteration <= countSectors) idColor = 0;
+                
+                // Заполняем сектор цветом из массива кистей
+                graph.FillPie(brushs[idColor], circle, currentSectorDegree, sectorDegree);
 
-            // Рисование контура окружности
-            graph.DrawEllipse(blackPen, circle);
+                // Обводим контур цветом из массива ручек
+                graph.DrawPie(pens[idColor], circle, currentSectorDegree, sectorDegree);
 
-            // Переходим к следующему сектору
-            currentSectorDegree += sectorDegree;
+                // Рисование контура окружности
+                graph.DrawEllipse(blackPen, circle);
 
-            // Выбираем цвет для рисования
-            numberIteration++;
-            idColor++;
-            if (idColor == countSectors) idColor = 0;
-            if (numberIteration == countSectors) {
-                if (idStartColor == countSectors) idStartColor = 0; else idStartColor++;
-                numberIteration = 0;
-                idColor = idStartColor;
+                // Переходим к следующему сектору
+                currentSectorDegree += sectorDegree;
             }
+
+            idStartColor++;
+            if (idStartColor == countSectors) idStartColor = 0;
+
+            // Обнуляем количество итераций, т.к. в цикле 16 итераций
+            numberIteration = 0;
 
             // Выводим изображения на экран
             pictureBox.Image = myBitmap;
@@ -92,22 +94,22 @@ namespace lab4
         void getPensAndBrushes(SolidBrush[] brushs, Pen[] pens, int countSectors)
         {
             Color[] colors = new Color[countSectors];
-            colors[0] = Color.Black;
-            colors[1] = Color.Gray;
-            colors[2] = Color.Silver;
-            colors[3] = Color.White;
-            colors[4] = Color.Fuchsia;
-            colors[5] = Color.Purple;
-            colors[6] = Color.Red;
-            colors[7] = Color.Maroon;
-            colors[8] = Color.Yellow;
-            colors[9] = Color.Olive;
-            colors[10] = Color.Lime;
-            colors[11] = Color.Green;
-            colors[12] = Color.Aqua;
-            colors[13] = Color.Teal;
-            colors[14] = Color.Blue;
-            colors[15] = Color.Navy;
+            colors[0] = Color.FromArgb(243, 129, 129);
+            colors[1] = Color.FromArgb(252, 227, 138);
+            colors[2] = Color.FromArgb(234, 255, 208);
+            colors[3] = Color.FromArgb(149, 225, 211);
+            colors[4] = Color.FromArgb(168, 216, 234);
+            colors[5] = Color.FromArgb(170, 150, 218);
+            colors[6] = Color.FromArgb(252, 186, 211);
+            colors[7] = Color.FromArgb(255, 255, 210);
+            colors[8] = Color.FromArgb(0, 184, 169);
+            colors[9] = Color.FromArgb(248, 243, 212);
+            colors[10] = Color.FromArgb(246, 65, 108);
+            colors[11] = Color.FromArgb(255, 222, 125);
+            colors[12] = Color.FromArgb(255, 100, 100);
+            colors[13] = Color.FromArgb(255, 130, 100);
+            colors[14] = Color.FromArgb(255, 170, 100);
+            colors[15] = Color.FromArgb(255, 245, 165);
 
             for (int idColor = 0; idColor < countSectors; idColor++)
             {
@@ -115,7 +117,7 @@ namespace lab4
                 brushs[idColor] = new SolidBrush(colors[idColor]);
 
                 // Заполняем ручку
-                pens[idColor] = new Pen(colors[idColor], 2);
+                pens[idColor] = new Pen(colors[idColor], 3);
                 pens[idColor].DashStyle = DashStyle.DashDot;
             }
         }
