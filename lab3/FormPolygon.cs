@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace lab3
 {
@@ -11,14 +8,13 @@ namespace lab3
         {
             InitializeComponent();
 
-            DrawAndFillPolygon firstTask = new DrawAndFillPolygon(pbFirst);
-            firstTask.drawFirst(pbFirst);
+            // Первое задание
+            ClassFirst first = new ClassFirst();
+            first.drawTask(pbFirst);
 
-            DrawAndFillPolygon secondTask = new DrawAndFillPolygon(pbSecond);
-            secondTask.drawSecond(pbSecond);
-
-
+            // Второе задание
+            ClassSecond second = new ClassSecond();
+            second.drawTask(pbSecond);
         }
-
 	}
 }
