@@ -52,7 +52,7 @@ namespace lab4
 
         public void ActivateTimer()
         {
-            myTimer.Interval = 1000;
+            myTimer.Interval = 500;
             myTimer.Enabled = true;
             myTimer.Tick += new EventHandler(TimerEventProcessor);
             myTimer.Start();
