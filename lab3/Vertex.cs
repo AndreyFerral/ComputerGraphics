@@ -20,6 +20,9 @@ namespace lab3
         }
 
         public int getId() => id;
+        public int getX() => coordX;
+        public int getY() => coordY;
+
 
     }
 }
