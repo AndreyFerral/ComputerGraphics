@@ -10,6 +10,8 @@ namespace lab3
     {
         Bitmap myBitmap;
         Graphics graph;
+
+        List<int> minPath;
         List<Vertex> vertexs;
         List<List<int>> edges;
 
@@ -84,30 +86,24 @@ namespace lab3
                 }
 
                 // Информация для отладки
-                Debug.WriteLine("Все вершины");
+                Console.WriteLine("Все вершины");
                 foreach (Vertex vert in vertexs) {
-                    Debug.WriteLine(vert.getX() + " " + vert.getY());
+                    Console.WriteLine(vert.getX() + " " + vert.getY());
                 }
-                Debug.WriteLine("Матрица смежности");
+                Console.WriteLine("Матрица смежности");
                 foreach (List<int> edg in edges)
                 {
-                    foreach (int number in edg)
-                    {
-                        Debug.Write(number + " ");
-                    }
-                    Debug.WriteLine("");
+                    Console.WriteLine(string.Join(" ", edg));
                 }
 
                 // Рисуем окружность
-                SolidBrush blackBrush = new SolidBrush(Color.Black);
-                Font myFont = new Font("Microsoft Sans Serif", 10);
-                Rectangle circle = new Rectangle(coordX - radius, coordY - radius, radius + radius, radius + radius);
-                graph.FillEllipse(blackBrush, circle);
-                graph.DrawString((vertex.getSize() - 1).ToString(), myFont, blackBrush, coordX - diameter, coordY - diameter);
+                drawVertex(coordX, coordY, radius);
 
-                pbGraph.Image = myBitmap;
+                // Рисуем номер окружности
+                drawNumber((vertex.getSize() - 1).ToString(), coordX - diameter, coordY - diameter);
+
             }
-            catch(FormatException exception) 
+            catch (FormatException exception) 
             {
                 MessageBox.Show("Введенные данные не являются целым числом", "Ошибка");
             }
@@ -125,12 +121,11 @@ namespace lab3
                 int edgeEnd = Convert.ToInt32(textEdgeEnd.Text);
                 int edgeWeight = Convert.ToInt32(textEdgeWeight.Text);
 
-                // Debug.WriteLine(vertexs.Count);
                 if (edgeStart == edgeEnd)
                 {
                     throw new Exception("Для создания ребра необходимо указать разные вершины");
                 }
-                if (edgeStart >= vertexs.Count || edgeEnd >= vertexs.Count)
+                if (edgeStart >= vertexs.Count || edgeEnd >= vertexs.Count || edgeStart < 0 || edgeEnd < 0)
                 {
                     throw new Exception("Ввёденная вершина не существует");
                 }
@@ -147,37 +142,25 @@ namespace lab3
                 edges[edgeStart][edgeEnd] = edgeWeight;
                 edges[edgeEnd][edgeStart] = edgeWeight;
 
-                Debug.WriteLine("Матрица смежности");
+                Console.WriteLine("Матрица смежности");
                 foreach (List<int> edg in edges)
                 {
-                    foreach (int number in edg)
-                    {
-                        Debug.Write(number + " ");
-                    }
-                    Debug.WriteLine("");
+                    Console.WriteLine(string.Join(" ", edg));
                 }
 
                 // Рисуем линию между окружностями
-                Pen blackPen = new Pen(Color.Red);
-                PointF firstCircle = new PointF(vertexs[edgeStart].getX(), vertexs[edgeStart].getY());
-                PointF secondCircle = new PointF(vertexs[edgeEnd].getX(), vertexs[edgeEnd].getY());
-                PointF firstPoint = getPointOnCircle(firstCircle, secondCircle, 10);
-                PointF secondPoint = getPointOnCircle(secondCircle, firstCircle, 10);
-                graph.DrawLine(blackPen, firstPoint, secondPoint);
+                Pen blackPen = new Pen(Color.Black);
+                drawEdge(blackPen, edgeStart, edgeEnd);
 
                 // Рисуем вес ребра
-                SolidBrush blackBrush = new SolidBrush(Color.Black);
-                Font myFont = new Font("Microsoft Sans Serif", 10);
-                float middleCircleX = (firstPoint.X + secondPoint.X) / 2;
-                float middleCircleY = (firstPoint.Y + secondPoint.Y) / 2;
-                graph.DrawString(edgeWeight.ToString(), myFont, blackBrush, middleCircleX - 10, middleCircleY - 15);
-
-                pbGraph.Image = myBitmap;
+                float middleCircleX = (vertexs[edgeStart].getX() + vertexs[edgeEnd].getX()) / 2;
+                float middleCircleY = (vertexs[edgeStart].getY() + vertexs[edgeEnd].getY()) / 2;
+                drawNumber(edgeWeight.ToString(), middleCircleX - 10, middleCircleY - 15);
 
                 // Информация для отладки
-                Debug.WriteLine("Ребро между вершинами");
-                Debug.WriteLine(vertexs[edgeStart].getX() + " " + vertexs[edgeStart].getY());
-                Debug.WriteLine(vertexs[edgeEnd].getX() + " " + vertexs[edgeEnd].getY());
+                Console.WriteLine("Ребро между вершинами");
+                Console.WriteLine(vertexs[edgeStart].getX() + " " + vertexs[edgeStart].getY());
+                Console.WriteLine(vertexs[edgeEnd].getX() + " " + vertexs[edgeEnd].getY());
             }
             catch (FormatException exception)
             {
@@ -191,7 +174,89 @@ namespace lab3
 
         private void findPath_Click(object sender, System.EventArgs e)
         {
+            try
+            {
+                int pathStart = Convert.ToInt32(textPathStart.Text);
+                int pathEnd = Convert.ToInt32(textPathEnd.Text);
 
+                if (pathStart >= vertexs.Count || pathEnd >= vertexs.Count || pathStart < 0 || pathEnd < 0)
+                {
+                    throw new Exception("Ввёденная вершина не существует");
+                }
+
+                if (minPath != null)
+                {
+                    // Закрашиваем прошлый минимальный путь черным цветом
+                    Pen blackPen = new Pen(Color.Black);
+                    drawEdges(blackPen);
+                }
+
+                // Заполняем объект класса myGraph для получения путей
+                Graph myGraph = new Graph(vertexs.Count);
+                for (int i = 0; i < edges.Count; i++)
+                {
+                    for (int j = 0; j < edges[i].Count; j++)
+                    {
+                        if (edges[i][j] != 0)
+                        {
+                            // Console.Write(edges[i][j] + " ");
+                            myGraph.addEdge(i, j, edges[i][j], vertexs.Count);
+                        }
+                    }
+                }
+
+                Console.WriteLine("Пути от " + pathStart + " до " + pathEnd);
+                myGraph.printAllPaths(pathStart, pathEnd);
+
+                // Закрашиваем минимальный путь красным цветом
+                Pen redPen = new Pen(Color.Red);
+                minPath = myGraph.getMinPath();
+                drawEdges(redPen);
+            }
+            catch (FormatException exception)
+            {
+                MessageBox.Show("Введенные данные не являются целым числом", "Ошибка");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Ошибка");
+            }
+        }
+
+        void drawVertex(int x, int y, int radius) 
+        {
+            SolidBrush blackBrush = new SolidBrush(Color.Black);
+            Rectangle circle = new Rectangle(x - radius, y - radius, radius + radius, radius + radius);
+            graph.FillEllipse(blackBrush, circle);
+            pbGraph.Image = myBitmap;
+        }
+
+        void drawNumber(string text, float x, float y)
+        {
+            SolidBrush blackBrush = new SolidBrush(Color.Black);
+            Font myFont = new Font("Microsoft Sans Serif", 10);
+            graph.DrawString(text, myFont, blackBrush, x, y);
+            pbGraph.Image = myBitmap;
+        }
+
+        // Метод для рисования линии ребра определенным цветом
+        private void drawEdge(Pen myPen, int index1, int index2)
+        {
+            PointF firstCircle = new PointF(vertexs[index1].getX(), vertexs[index1].getY());
+            PointF secondCircle = new PointF(vertexs[index2].getX(), vertexs[index2].getY());
+            PointF firstPoint = getPointOnCircle(firstCircle, secondCircle, 10);
+            PointF secondPoint = getPointOnCircle(secondCircle, firstCircle, 10);
+            graph.DrawLine(myPen, firstPoint, secondPoint);
+            pbGraph.Image = myBitmap;
+        }
+
+        // Метод для рисования линий ребёр определенным цветом
+        private void drawEdges(Pen myPen) 
+        {
+            for (int i = 0; i < minPath.Count - 1; i++)
+            {
+                drawEdge(myPen, minPath[i], minPath[i + 1]);
+            }
         }
 
         private void clearGraph_Click(object sender, System.EventArgs e)
@@ -204,6 +269,7 @@ namespace lab3
 
             vertexs.Clear();
             edges.Clear();
+            minPath.Clear();
         }
     }
 }
