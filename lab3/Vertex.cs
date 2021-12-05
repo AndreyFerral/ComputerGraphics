@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab3
 {
@@ -24,7 +20,5 @@ namespace lab3
         public int getSize() => size;
         public int getX() => coordX;
         public int getY() => coordY;
-
-
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab3
 {
@@ -32,7 +29,6 @@ namespace lab3
 		private void initAdjList()
 		{
 			adjList = new List<int>[size];
-
 			for (int i = 0; i < size; i++)
 			{
 				adjList[i] = new List<int>();
@@ -53,16 +49,45 @@ namespace lab3
 
 			matrixWeight[u][v] = weight;
 			matrixWeight[v][u] = weight;
-
-			Console.WriteLine("Матрица смежности Graph");
-			foreach (List<int> edg in matrixWeight)
-			{
-				Console.WriteLine(string.Join(" ", edg));
-			}
 		}
 
-		// Вывод всех путей от 's' до 'd'
-		public void printAllPaths(int s, int d)
+		public List<int> getMinPath(int s, int d)
+		{
+			// Получаем все возможные пути из вершины в вершину
+			getAllPaths(s, d);
+
+			// Получаем список с весами всех путей
+			for (int i = 0; i < allPaths.Count; i++)
+			{
+				int sum = 0;
+				for (int j = 0; j < allPaths[i].Count - 1; j++)
+				{
+					sum += matrixWeight[allPaths[i][j]][allPaths[i][j + 1]];
+				}
+				weightPaths.Add(sum);
+			}
+
+			// Выводим на экран отладочную информацию
+			getInformation(s, d);
+
+			// Получаем список с минимальным весом
+			int idWeight = 0;
+			int weight = 999;
+			for (int i = 0; i < weightPaths.Count; i++)
+			{
+				if (weightPaths[i] < weight)
+				{
+					idWeight = i;
+					weight = weightPaths[i];
+				}
+			}
+
+			Console.WriteLine("Минимальный вес id: " + idWeight);
+			return allPaths[idWeight];
+		}
+
+		// Получение всех путей от 's' до 'd'
+		public void getAllPaths(int s, int d)
 		{
 			bool[] isVisited = new bool[size];    // посещенные вершины в текущем пути
 			List<int> pathList = new List<int>(); // текущий путь
@@ -71,44 +96,11 @@ namespace lab3
 			pathList.Add(s);
 
 			// Вызов рекурсивного метода
-			printAllPathsUtil(s, d, isVisited, pathList);
-		}
-
-		public List<int> getMinPath() 
-		{
-			foreach (List<int> path in allPaths)
-			{
-				Console.WriteLine(string.Join(" ", path));
-			}
-
-			// Получаем список с весами путей
-			for (int i = 0; i < allPaths.Count; i++) 
-			{
-				int sum = 0;
-				for (int j = 0; j < allPaths[i].Count-1; j++)
-				{
-					sum += matrixWeight[allPaths[i][j]][allPaths[i][j+1]];
-				}
-				Console.WriteLine(sum);
-				weightPaths.Add(sum);
-			}
-
-			// Получаем список с минимальным весом
-			int idWeight = 0;
-			int weight = 999;
-			for (int i = 0; i < weightPaths.Count; i++)
-			{
-				if (weightPaths[i] < weight) {
-					idWeight = i;
-					weight = weightPaths[i];
-				}
-			}
-			Console.WriteLine("Минимальный вес id: " + idWeight);
-			return allPaths[idWeight];
+			getAllPathsUtil(s, d, isVisited, pathList);
 		}
 
 		// Рекурсивный метод - получение всех путей
-		private void printAllPathsUtil(int u, int d, bool[] isVisited, List<int> localPathList)
+		private void getAllPathsUtil(int u, int d, bool[] isVisited, List<int> localPathList)
 		{
 			if (u.Equals(d))
 			{
@@ -129,7 +121,7 @@ namespace lab3
 					// Добавляем вершину в путь
 					localPathList.Add(i);
 
-					printAllPathsUtil(i, d, isVisited, localPathList);
+					getAllPathsUtil(i, d, isVisited, localPathList);
 
 					// Убираем вершину из пути
 					localPathList.Remove(i);
@@ -138,6 +130,27 @@ namespace lab3
 
 			// Убираем вершину из списка посещенных вершин
 			isVisited[u] = false;
+		}
+
+		private void getInformation(int s, int d)
+		{
+			// Выводим в консоль матрицу смежности
+			Console.WriteLine("Матрица смежности Graph");
+			foreach (List<int> edg in matrixWeight)
+			{
+				Console.WriteLine(string.Join(" ", edg));
+			}
+
+			// Выводим в консоль все пути от вершины до вершины
+			Console.WriteLine("Пути от " + s + " до " + d);
+			foreach (List<int> path in allPaths)
+			{
+				Console.WriteLine(string.Join(" ", path));
+			}
+
+			// Выводим в консоль все веса путей
+			Console.WriteLine("Веса путей");
+			Console.WriteLine(string.Join(" ", weightPaths));
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
@@ -86,15 +85,7 @@ namespace lab3
                 }
 
                 // Информация для отладки
-                Console.WriteLine("Все вершины");
-                foreach (Vertex vert in vertexs) {
-                    Console.WriteLine(vert.getX() + " " + vert.getY());
-                }
-                Console.WriteLine("Матрица смежности");
-                foreach (List<int> edg in edges)
-                {
-                    Console.WriteLine(string.Join(" ", edg));
-                }
+                Console.WriteLine("Добавленная вершина: " + vertex.getX() + " " + vertex.getY());
 
                 // Рисуем окружность
                 drawVertex(coordX, coordY, radius);
@@ -142,11 +133,8 @@ namespace lab3
                 edges[edgeStart][edgeEnd] = edgeWeight;
                 edges[edgeEnd][edgeStart] = edgeWeight;
 
-                Console.WriteLine("Матрица смежности");
-                foreach (List<int> edg in edges)
-                {
-                    Console.WriteLine(string.Join(" ", edg));
-                }
+                // Информация для отладки
+                Console.WriteLine("Добавленное ребро: вершины " + edgeStart + " и " + edgeEnd + ", вес " + edgeWeight);
 
                 // Рисуем линию между окружностями
                 Pen blackPen = new Pen(Color.Black);
@@ -156,11 +144,6 @@ namespace lab3
                 float middleCircleX = (vertexs[edgeStart].getX() + vertexs[edgeEnd].getX()) / 2;
                 float middleCircleY = (vertexs[edgeStart].getY() + vertexs[edgeEnd].getY()) / 2;
                 drawNumber(edgeWeight.ToString(), middleCircleX - 10, middleCircleY - 15);
-
-                // Информация для отладки
-                Console.WriteLine("Ребро между вершинами");
-                Console.WriteLine(vertexs[edgeStart].getX() + " " + vertexs[edgeStart].getY());
-                Console.WriteLine(vertexs[edgeEnd].getX() + " " + vertexs[edgeEnd].getY());
             }
             catch (FormatException exception)
             {
@@ -182,6 +165,10 @@ namespace lab3
                 if (pathStart >= vertexs.Count || pathEnd >= vertexs.Count || pathStart < 0 || pathEnd < 0)
                 {
                     throw new Exception("Ввёденная вершина не существует");
+                }
+                if (pathStart == pathEnd)
+                {
+                    throw new Exception("Для поиска пути необходимо указать разные вершины");
                 }
 
                 if (minPath != null)
@@ -205,12 +192,9 @@ namespace lab3
                     }
                 }
 
-                Console.WriteLine("Пути от " + pathStart + " до " + pathEnd);
-                myGraph.printAllPaths(pathStart, pathEnd);
-
                 // Закрашиваем минимальный путь красным цветом
                 Pen redPen = new Pen(Color.Red);
-                minPath = myGraph.getMinPath();
+                minPath = myGraph.getMinPath(pathStart, pathEnd);
                 drawEdges(redPen);
             }
             catch (FormatException exception)
@@ -270,6 +254,9 @@ namespace lab3
             vertexs.Clear();
             edges.Clear();
             minPath.Clear();
+
+            vertexs = new List<Vertex>();
+            edges = new List<List<int>>();
         }
     }
 }
