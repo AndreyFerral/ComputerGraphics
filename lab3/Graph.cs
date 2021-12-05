@@ -15,7 +15,7 @@ namespace lab3
 
 		public Graph(int vertices)
 		{
-			this.size = vertices;
+			size = vertices;
 
 			allPaths = new List<List<int>>();
 			weightPaths = new List<int>();

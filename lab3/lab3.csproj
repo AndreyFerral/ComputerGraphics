@@ -68,6 +68,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vertex.cs" />
+    <Compile Include="WeightedGraph.cs" />
     <EmbeddedResource Include="FormPolygon.resx">
       <DependentUpon>FormPolygon.cs</DependentUpon>
     </EmbeddedResource>
